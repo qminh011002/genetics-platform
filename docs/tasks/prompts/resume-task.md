@@ -1,0 +1,1 @@
+Tiếp tục task TASK_ID. Đọc mục "Kết quả" và "Còn lại" trong `docs/tasks/items/*/TASK_ID-*.md`, `git log` và `git status` của nhánh hiện tại, rồi làm tiếp từ "Lệnh để tiếp tục". Giữ nguyên luật của prompt start-task (allowed_paths, blocked, pnpm ci, cập nhật task file + board).
