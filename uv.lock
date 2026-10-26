@@ -1,0 +1,19 @@
+version = 1
+revision = 5
+requires-python = ">=3.13"
+
+[manifest]
+members = [
+    "genetics-platform-backend",
+    "legacy-import",
+]
+
+[[package]]
+name = "genetics-platform-backend"
+version = "0.1.0"
+source = { virtual = "services/backend" }
+
+[[package]]
+name = "legacy-import"
+version = "0.1.0"
+source = { virtual = "tools/legacy_import" }

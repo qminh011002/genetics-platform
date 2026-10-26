@@ -8,7 +8,7 @@ Tổng: 39 task (38 làm + 1 lập kế hoạch wave kế) · E01: 10 · E02: 7 
 
 | ID | Task | Epic | Owner | P | Size | Phụ thuộc | Trạng thái | PR |
 |---|---|---|---|---|---|---|---|---|
-| T0101 | [Khởi tạo gốc monorepo](items/E01/T0101-khoi-tao-goc-monorepo.md) | E01 | Claude Planner | P0 | M | — | ready | |
+| T0101 | [Khởi tạo gốc monorepo](items/E01/T0101-khoi-tao-goc-monorepo.md) | E01 | Claude Planner | P0 | M | — | in_review | nhánh `infra/T0101-khoi-tao-goc-monorepo` (chưa push) |
 | T0102 | [Package design-tokens](items/E01/T0102-package-design-tokens.md) | E01 | Claude Planner | P0 | M | T0101 | todo | |
 | T0103 | [Package ui](items/E01/T0103-package-ui.md) | E01 | Claude (web) | P0 | L | T0101, T0102 | todo | |
 | T0104 | [Package shared](items/E01/T0104-package-shared.md) | E01 | Claude (web) | P0 | M | T0101 | todo | |
