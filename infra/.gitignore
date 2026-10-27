@@ -1,0 +1,5 @@
+# Dữ liệu runtime của stack (bind mount) — không commit.
+backups/
+files/
+tls/
+.env

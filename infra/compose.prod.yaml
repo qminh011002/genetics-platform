@@ -1,0 +1,56 @@
+# Ghi đè cho staging / production trên VM (deploy-vm.md). Dùng cùng compose.yaml:
+#   docker compose -f compose.yaml -f compose.prod.yaml up -d --remove-orphans --wait
+# - Image kéo từ GHCR theo IMAGE_TAG (sha-<sha> cho staging, vX.Y.Z cho production); không build trên VM.
+# - Postgres / API không mở cổng ra host; chỉ nginx 80 (redirect) và 443 (TLS).
+# - TLS: ${TLS_DIR}/fullchain.pem + privkey.pem (CA nội bộ hoặc Let's Encrypt).
+# - backups/ và files/ là bind mount trên ổ VM để rsync offsite được.
+
+services:
+  api:
+    image: ${REGISTRY:?REGISTRY missing (ghcr.io/<org>)}/genetics-api:${IMAGE_TAG:?IMAGE_TAG missing}
+    build: !reset null
+    ports: !reset []
+    volumes:
+      - ${FILES_DIR:-./files}:/data/files
+
+  worker:
+    image: ${REGISTRY:?REGISTRY missing (ghcr.io/<org>)}/genetics-api:${IMAGE_TAG:?IMAGE_TAG missing}
+    build: !reset null
+    volumes:
+      - ${FILES_DIR:-./files}:/data/files
+
+  web:
+    image: ${REGISTRY:?REGISTRY missing (ghcr.io/<org>)}/genetics-web:${IMAGE_TAG:?IMAGE_TAG missing}
+    build: !reset null
+
+  mobile:
+    image: ${REGISTRY:?REGISTRY missing (ghcr.io/<org>)}/genetics-mobile:${IMAGE_TAG:?IMAGE_TAG missing}
+    build: !reset null
+
+  postgres:
+    ports: !reset []
+
+  backup:
+    volumes:
+      - ./backup:/opt/backup:ro
+      - ${BACKUP_DIR:-./backups}:/backups
+      - ${FILES_DIR:-./files}:/data/files:ro
+
+  nginx:
+    environment:
+      SERVER_NAME: ${SERVER_NAME:?SERVER_NAME missing}
+      NGINX_HTTPS_PORT: 443
+    volumes:
+      # Template prod thay template HTTP: 80 → 301 https, 443 TLS + HSTS, cùng snippets.
+      - ./nginx/prod/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./nginx/snippets:/etc/nginx/snippets:ro
+      - ${TLS_DIR:-./tls}:/etc/nginx/tls:ro
+    ports: !override
+      - '${NGINX_HTTP_PORT:-80}:80'
+      - '${NGINX_HTTPS_PORT:-443}:443'
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'nginx -t >/dev/null 2>&1 && wget -q -O /dev/null --no-check-certificate https://127.0.0.1/healthz || exit 1',
+        ]
