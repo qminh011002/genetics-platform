@@ -2,7 +2,7 @@
 id: T0304
 title: Session / UnitOfWork với set_config(app.*), Procrastinate app + worker + job ping + readyz hàng đợi, job đăng ký gọi use case
 epic: E03
-status: todo
+status: ready
 area: backend
 type: feature
 priority: P0

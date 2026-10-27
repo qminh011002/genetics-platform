@@ -2,7 +2,7 @@
 id: T0104
 title: Package shared: format vi-VN, mã lỗi / blocker, mã quyền, enum + nhãn, schema zod form mẫu, glossary
 epic: E01
-status: in_review
+status: done
 area: shared
 type: feature
 priority: P0

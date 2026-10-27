@@ -2,7 +2,7 @@
 id: T0103
 title: Package ui: shadcn init --monorepo (Base UI), primitive ban đầu, component nghiệp vụ dùng chung
 epic: E01
-status: in_review
+status: done
 area: web
 type: feature
 priority: P0

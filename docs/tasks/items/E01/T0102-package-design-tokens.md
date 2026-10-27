@@ -2,7 +2,7 @@
 id: T0102
 title: Package design-tokens: tokens.json → web.css (Tailwind 4 @theme + biến shadcn) và tokens.ts
 epic: E01
-status: in_review
+status: done
 area: shared
 type: feature
 priority: P0

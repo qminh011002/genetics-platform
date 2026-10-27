@@ -2,7 +2,7 @@
 id: T0106
 title: Infra: compose.yaml (postgres 18, api, worker, web, mobile, nginx, backup; profile dev/test/ops), nginx template, .env.example, deploy.sh, backup scripts
 epic: E01
-status: in_review
+status: done
 area: infra
 type: chore
 priority: P0

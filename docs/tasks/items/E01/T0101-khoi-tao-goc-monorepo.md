@@ -2,7 +2,7 @@
 id: T0101
 title: Khởi tạo gốc monorepo: pnpm 12 + catalog, Turborepo 2, uv workspace, husky / commitlint / lint-staged
 epic: E01
-status: in_review
+status: done
 area: infra
 type: chore
 priority: P0

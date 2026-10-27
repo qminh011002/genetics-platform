@@ -2,7 +2,7 @@
 id: T0301
 title: Backend skeleton: bootstrap, shared_kernel, 13 module rỗng + public.py, settings, CLI, healthz/readyz, import-linter, package.json bọc uv
 epic: E03
-status: in_review
+status: done
 area: backend
 type: feature
 priority: P0
