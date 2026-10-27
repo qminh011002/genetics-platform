@@ -1,0 +1,129 @@
+{
+  "error": {
+    "bad_request": "Invalid request",
+    "unauthenticated": "You are not signed in",
+    "token_expired": "Your session has expired",
+    "account_pending": "Your account has no role yet",
+    "platform_not_allowed": "Your role cannot use this platform",
+    "permission_denied": "You do not have permission for this action",
+    "not_found": "Not found",
+    "batch_closed": "Batch is closed",
+    "gate_not_met": "Stage close conditions not met",
+    "dq_blocking": "Unresolved data quality errors",
+    "duplicate_code": "Code already exists",
+    "duplicate_id": "Record already submitted with different content",
+    "has_children": "Cannot delete: child records exist",
+    "generation_not_latest": "Generations can only be added from the latest one",
+    "invalid_transition": "This status change is not allowed",
+    "assignee_lacks_permission": "Assignee lacks permission for this form",
+    "idempotency_key_reused": "Idempotency key reused with different content",
+    "import_not_validated": "Import has not finished validation",
+    "import_undo_expired": "Import undo window has expired",
+    "version_conflict": "Data was modified by someone else",
+    "payload_too_large": "File exceeds the size limit",
+    "unsupported_media_type": "Unsupported file type",
+    "validation_failed": "Invalid data",
+    "reason_required": "A reason is required",
+    "edit_window_expired": "The 24-hour edit window has passed",
+    "precondition_required": "Missing data version (If-Match)",
+    "rate_limited": "Too many requests, try again later",
+    "internal_error": "Unexpected server error",
+    "service_unavailable": "Service temporarily unavailable"
+  },
+  "blocker": {
+    "missing_population_size": "Population size not set",
+    "missing_sexing": "No sexing record",
+    "missing_egg_collection": "No egg collection record",
+    "missing_egg_weighing": "No egg weighing record",
+    "pending_individuals": "{{count}} individuals still pending",
+    "missing_neonate_harvest": "No neonate harvest record",
+    "missing_neonate_weighing": "No neonate weighing record",
+    "missing_conditions": "Experiment conditions not set",
+    "missing_larvae_observation": "No larvae observation",
+    "missing_pupae_sample": "No pupae sample",
+    "branch_required": "Choose a Larvae / Nursery branch",
+    "dq_errors_open": "{{count}} data quality errors unresolved"
+  },
+  "field_error": {
+    "required": "Required",
+    "out_of_range": "Out of range",
+    "outside_batch_dates": "Outside batch dates",
+    "invalid_format": "Invalid format",
+    "unknown_reference": "Unknown reference",
+    "duplicate_record": "Duplicate record",
+    "not_latest_generation": "Not the latest generation"
+  },
+  "form": {
+    "egg_collection": "Egg collection",
+    "egg_weighing": "Egg weighing",
+    "sexing": "Emerge & sexing",
+    "neonate_harvest": "Neonate harvest",
+    "neonate_weighing": "Neonate weighing",
+    "larvae_observation": "Larvae observation",
+    "nursery_observation": "Nursery observation",
+    "pupae_sample": "Pupae sample",
+    "feeding": "Feeding",
+    "sb_clutch": "Clutch (Selective)",
+    "sb_clutch_sampling": "Clutch sampling",
+    "sb_hatch": "Hatch harvest",
+    "sb_phenotype": "Phenotype weighing"
+  },
+  "enum": {
+    "program": { "maintenance": "Maintenance", "selective": "Selective" },
+    "stage": {
+      "egg": "Egg production",
+      "neonate": "Neonate",
+      "nursery": "Nursery",
+      "larvae": "Larvae",
+      "pupae": "Pupae"
+    },
+    "batch_status": { "open": "Open", "closed": "Closed", "reopened": "Reopened" },
+    "task_status": {
+      "assigned": "Assigned",
+      "in_progress": "In progress",
+      "under_review": "Under review",
+      "requires_amendment": "Requires amendment",
+      "pending": "Pending",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "task_kind": { "data": "Data entry", "general": "General" },
+    "routine_status": {
+      "planned": "Planned",
+      "done": "Done",
+      "late": "Late",
+      "missed": "Missed",
+      "cancelled": "Cancelled"
+    },
+    "dq_state": {
+      "error": "Error",
+      "warning": "Warning",
+      "ignored": "Ignored",
+      "resolved": "Resolved"
+    },
+    "sync_status": {
+      "pending": "Pending",
+      "sent": "Sent",
+      "conflict": "Conflict",
+      "failed": "Failed"
+    },
+    "priority": {
+      "urgent": "Urgent",
+      "important": "Important",
+      "normal": "Normal",
+      "low": "Low"
+    },
+    "role": {
+      "worker": "Worker",
+      "executive": "Executive",
+      "manager": "Manager",
+      "admin": "Admin"
+    },
+    "platform": { "web": "Web", "app": "Mobile app" },
+    "line": { "SEL": "Selection", "CTR": "Control", "BK": "Backup" },
+    "container_type": { "room": "Room", "cage": "Cage", "crate": "Crate" },
+    "import_row_status": { "error": "Error", "warning": "Warning", "ok": "OK" },
+    "permission_effect": { "grant": "Grant", "deny": "Deny" },
+    "permission_scope": { "own": "Own", "mem": "Member", "all": "All" }
+  }
+}

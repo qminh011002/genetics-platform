@@ -1,0 +1,67 @@
+{
+  "name": "@genetics/shared",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Code TS dùng chung web + mobile, không phụ thuộc UI: format vi-VN, mã lỗi / blocker, mã quyền, enum + nhãn, schema zod form, glossary, i18n.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./format": {
+      "types": "./dist/format/index.d.ts",
+      "default": "./dist/format/index.js"
+    },
+    "./codes": {
+      "types": "./dist/codes.d.ts",
+      "default": "./dist/codes.js"
+    },
+    "./permissions": {
+      "types": "./dist/permissions.d.ts",
+      "default": "./dist/permissions.js"
+    },
+    "./enums": {
+      "types": "./dist/enums.d.ts",
+      "default": "./dist/enums.js"
+    },
+    "./forms": {
+      "types": "./dist/forms/index.d.ts",
+      "default": "./dist/forms/index.js"
+    },
+    "./forms/*": {
+      "types": "./dist/forms/*.d.ts",
+      "default": "./dist/forms/*.js"
+    },
+    "./glossary": {
+      "types": "./dist/glossary.d.ts",
+      "default": "./dist/glossary.js"
+    },
+    "./i18n": {
+      "types": "./dist/i18n/index.d.ts",
+      "default": "./dist/i18n/index.js"
+    },
+    "./i18n/*.json": "./dist/i18n/*.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
+  }
+}

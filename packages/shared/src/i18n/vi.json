@@ -1,0 +1,129 @@
+{
+  "error": {
+    "bad_request": "Yêu cầu không hợp lệ",
+    "unauthenticated": "Bạn chưa đăng nhập",
+    "token_expired": "Phiên đăng nhập đã hết hạn",
+    "account_pending": "Tài khoản chưa được gán vai trò",
+    "platform_not_allowed": "Vai trò của bạn không dùng được nền tảng này",
+    "permission_denied": "Bạn không có quyền thực hiện thao tác này",
+    "not_found": "Không tìm thấy dữ liệu",
+    "batch_closed": "Batch đã chốt",
+    "gate_not_met": "Chưa đủ điều kiện chốt giai đoạn",
+    "dq_blocking": "Còn lỗi dữ liệu chưa xử lý",
+    "duplicate_code": "Mã đã tồn tại",
+    "duplicate_id": "Bản ghi đã được gửi với nội dung khác",
+    "has_children": "Không xoá được vì còn bản ghi con",
+    "generation_not_latest": "Chỉ thêm thế hệ từ thế hệ mới nhất",
+    "invalid_transition": "Không đổi được trạng thái này",
+    "assignee_lacks_permission": "Người được giao không có quyền nhập form này",
+    "idempotency_key_reused": "Yêu cầu trùng khoá với nội dung khác",
+    "import_not_validated": "File import chưa kiểm tra xong",
+    "import_undo_expired": "Đã quá hạn huỷ import",
+    "version_conflict": "Dữ liệu đã được người khác sửa",
+    "payload_too_large": "File vượt giới hạn dung lượng",
+    "unsupported_media_type": "Loại file không hỗ trợ",
+    "validation_failed": "Dữ liệu không hợp lệ",
+    "reason_required": "Cần ghi lý do",
+    "edit_window_expired": "Đã quá 24 giờ, không sửa được bản ghi này",
+    "precondition_required": "Thiếu phiên bản dữ liệu (If-Match)",
+    "rate_limited": "Bạn gửi quá nhanh, thử lại sau",
+    "internal_error": "Hệ thống gặp lỗi không lường trước",
+    "service_unavailable": "Hệ thống tạm thời không sẵn sàng"
+  },
+  "blocker": {
+    "missing_population_size": "Chưa nhập số lượng quần thể",
+    "missing_sexing": "Chưa có bản ghi sexing",
+    "missing_egg_collection": "Chưa có bản ghi thu trứng",
+    "missing_egg_weighing": "Chưa có bản ghi cân ổ trứng",
+    "pending_individuals": "Còn {{count}} cá thể chưa xử lý",
+    "missing_neonate_harvest": "Chưa có bản ghi thu neonate",
+    "missing_neonate_weighing": "Chưa có bản ghi cân mẫu neonate",
+    "missing_conditions": "Chưa đặt điều kiện thí nghiệm",
+    "missing_larvae_observation": "Chưa có quan sát larvae",
+    "missing_pupae_sample": "Chưa có mẫu pupae",
+    "branch_required": "Chưa chọn nhánh Larvae / Nursery",
+    "dq_errors_open": "Còn {{count}} lỗi dữ liệu chưa xử lý"
+  },
+  "field_error": {
+    "required": "Bắt buộc",
+    "out_of_range": "Ngoài khoảng cho phép",
+    "outside_batch_dates": "Ngoài thời gian của batch",
+    "invalid_format": "Sai định dạng",
+    "unknown_reference": "Giá trị tham chiếu không tồn tại",
+    "duplicate_record": "Bản ghi trùng",
+    "not_latest_generation": "Không phải thế hệ mới nhất"
+  },
+  "form": {
+    "egg_collection": "Thu trứng",
+    "egg_weighing": "Cân ổ trứng",
+    "sexing": "Emerge & sexing",
+    "neonate_harvest": "Thu neonate",
+    "neonate_weighing": "Cân mẫu neonate",
+    "larvae_observation": "Quan sát larvae",
+    "nursery_observation": "Quan sát nursery",
+    "pupae_sample": "Mẫu pupae",
+    "feeding": "Cho ăn",
+    "sb_clutch": "Ổ trứng (Selective)",
+    "sb_clutch_sampling": "Cân mẫu ổ trứng",
+    "sb_hatch": "Thu neonate ổ ấp",
+    "sb_phenotype": "Cân từng ấu trùng"
+  },
+  "enum": {
+    "program": { "maintenance": "Maintenance", "selective": "Selective" },
+    "stage": {
+      "egg": "Egg production",
+      "neonate": "Neonate",
+      "nursery": "Nursery",
+      "larvae": "Larvae",
+      "pupae": "Pupae"
+    },
+    "batch_status": { "open": "Open", "closed": "Đã chốt", "reopened": "Mở lại" },
+    "task_status": {
+      "assigned": "Đã giao",
+      "in_progress": "Đang làm",
+      "under_review": "Chờ kiểm tra",
+      "requires_amendment": "Cần sửa",
+      "pending": "Tạm dừng",
+      "completed": "Hoàn thành",
+      "cancelled": "Đã huỷ"
+    },
+    "task_kind": { "data": "Nhập liệu", "general": "Việc thường" },
+    "routine_status": {
+      "planned": "Chưa tới giờ",
+      "done": "Đã nhập",
+      "late": "Trễ",
+      "missed": "Bỏ lỡ",
+      "cancelled": "Đã huỷ"
+    },
+    "dq_state": {
+      "error": "Lỗi",
+      "warning": "Cảnh báo",
+      "ignored": "Đã bỏ qua",
+      "resolved": "Đã xử lý"
+    },
+    "sync_status": {
+      "pending": "Chờ gửi",
+      "sent": "Đã gửi",
+      "conflict": "Xung đột",
+      "failed": "Thất bại"
+    },
+    "priority": {
+      "urgent": "Urgent",
+      "important": "Important",
+      "normal": "Normal",
+      "low": "Low"
+    },
+    "role": {
+      "worker": "Worker",
+      "executive": "Executive",
+      "manager": "Manager",
+      "admin": "Admin"
+    },
+    "platform": { "web": "Web", "app": "App điện thoại" },
+    "line": { "SEL": "Chọn lọc", "CTR": "Đối chứng", "BK": "Dự phòng" },
+    "container_type": { "room": "Phòng", "cage": "Lồng", "crate": "Crate" },
+    "import_row_status": { "error": "Lỗi", "warning": "Cảnh báo", "ok": "Hợp lệ" },
+    "permission_effect": { "grant": "Cấp thêm", "deny": "Thu hồi" },
+    "permission_scope": { "own": "Của mình", "mem": "Thành viên", "all": "Tất cả" }
+  }
+}
