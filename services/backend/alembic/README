@@ -1,0 +1,41 @@
+Foundation migrations (T0302)
+
+Run from services/backend after provisioning the three database roles with
+infra/postgres/init/01-roles.sh. MIGRATION_DATABASE_URL must authenticate as
+app_migrator. Settings loads infra/.env for ENV=local; no URL lives in alembic.ini.
+
+    uv run alembic upgrade head
+    uv run alembic check
+    uv run alembic downgrade base
+    uv run alembic upgrade head
+
+Downgrade removes application schemas, including their data. It leaves the
+infra-owned roles/passwords and Alembic's empty public.alembic_version table.
+Global defaults remain hardened; schema-specific grants are recreated on upgrade.
+PostgreSQL 18 supplies gen_random_uuid(), so no pgcrypto extension is needed
+(backend.md 7.6, overview.md 6.3).
+
+The default integration run uses testcontainers postgres:18 and mounts the real
+infra role bootstrap. No existing database is used:
+
+    uv run pytest -m integration tests/integration/test_migrations.py
+
+Without Docker, an explicitly disposable PostgreSQL 18 database named test_*
+can be supplied through TEST_POSTGRES_URL. Bootstrap it with the same infra
+script first, using the test-only passwords in test_migrations.py. Tests remove
+all four application schemas; never point this variable at a shared database.
+
+Revisions keep their own table definitions. Current desired metadata lives in
+shared_kernel/infrastructure/schema.py, which env.py imports for drift detection.
+Future module migrations must add their metadata and replaceable entities to
+env.py. Audit function audit_v1.py is frozen once merged; add a versioned function
+and a new revision for later changes. attach_audit(table, schema='core') attaches
+its PGTrigger; register audit_trigger(table, schema) in env.py for comparison.
+Only tables with a UUID id column can use this helper. The idempotency response
+cache has a composite key and is not audited.
+
+Functions, views and triggers participate in alembic check. Grants are managed
+explicitly in migration SQL and checked by role/privilege integration tests.
+ReplaceablePolicy provides create/drop/replace for revision-owned RLS definitions;
+downgrade restores the previous definition. No application RLS policy is added
+by these foundation migrations (T0204).
