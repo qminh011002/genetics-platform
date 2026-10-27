@@ -1,0 +1,82 @@
+# Dependabot (T0105 · infrastructure.md §9): pnpm, uv, Docker, Compose, GitHub Actions.
+# Nhóm minor + patch thành một PR mỗi hệ sinh thái; major tách riêng. Cooldown 3 ngày cho bản mới phát hành.
+# PR Dependabot đổi lockfile → job deps-review đòi nhãn `deps-approved` (người duyệt gắn).
+# Commit `chore(deps): …` để qua commitlint; version JS vẫn chỉ ở `catalog:` của pnpm-workspace.yaml.
+version: 2
+updates:
+  - package-ecosystem: npm # pnpm (đọc pnpm-lock.yaml + catalog)
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 5
+    labels: [dependencies]
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      npm-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 5
+    labels: [dependencies]
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      uv-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: docker
+    directories: [/services/backend, /apps/web, /apps/mobile]
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 3
+    labels: [dependencies]
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      docker-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: docker-compose
+    directory: /infra
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 3
+    labels: [dependencies]
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      compose-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directories: [/, /scripts/ci/setup] # workflow + composite action dùng chung
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 3
+    labels: [dependencies]
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      actions-minor-patch:
+        update-types: [minor, patch]

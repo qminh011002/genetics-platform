@@ -1,0 +1,87 @@
+# Chính sách PR (T0105 · ADR-0014 §3, §6 · quality-standards.md §6): `deps-review` và `scope-check`.
+# Tách khỏi ci.yml vì phải chạy lại khi đổi nhãn / sửa PR body mà không kéo theo toàn bộ test.
+# Nhãn đọc qua API lúc chạy (không lấy từ payload) nên "Re-run" sau khi gắn nhãn cũng có hiệu lực.
+name: pr-policy
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+
+concurrency:
+  group: pr-policy-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deps-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: review
+        name: Lockfile đổi cần nhãn deps-approved
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          PR: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          labels="$(gh pr view "$PR" --json labels --jq '[.labels[].name] | join(",")')"
+          node scripts/ci/deps-review.mjs --base "origin/$BASE_REF" --labels "$labels"
+      # Init: audit chỉ cảnh báo (quality-standards.md §2.1); Harden (W4) đổi sang fail khi có lỗ hổng high.
+      - uses: ./scripts/ci/setup
+        if: steps.review.outputs.lockfile == 'true'
+        with:
+          python: 'true'
+          install: 'false'
+      - name: pnpm audit (cảnh báo)
+        if: steps.review.outputs.lockfile == 'true'
+        run: pnpm audit --audit-level high || echo "::warning title=pnpm audit::Có lỗ hổng mức high trở lên (xem log)"
+      - name: pip-audit (cảnh báo)
+        if: steps.review.outputs.lockfile == 'true'
+        run: uv run --locked pip-audit --skip-editable || echo "::warning title=pip-audit::Có lỗ hổng trong dependency Python (xem log)"
+
+  scope-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: scope
+        name: Diff so với allowed_paths của task trong PR body
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          printf '%s' "$PR_BODY" > "$RUNNER_TEMP/pr-body.md"
+          node scripts/ci/scope-check.mjs --body-file "$RUNNER_TEMP/pr-body.md" --base "origin/$BASE_REF"
+      # Không fail check: lệch phạm vi được phép nếu người duyệt đồng ý; nhãn làm nó hiện rõ khi review.
+      - name: Gắn / gỡ nhãn out-of-scope
+        if: steps.scope.outputs.status != ''
+        env:
+          STATUS: ${{ steps.scope.outputs.status }}
+          PR: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          has="$(gh api "repos/$GH_REPO/issues/$PR/labels" --jq '[.[].name] | index("out-of-scope") != null')"
+          if [[ "$STATUS" == out-of-scope && "$has" != true ]]; then
+            gh api -X POST "repos/$GH_REPO/issues/$PR/labels" -f 'labels[]=out-of-scope' --silent
+            echo "Đã gắn nhãn out-of-scope"
+          elif [[ "$STATUS" != out-of-scope && "$has" == true ]]; then
+            gh api -X DELETE "repos/$GH_REPO/issues/$PR/labels/out-of-scope" --silent
+            echo "Đã gỡ nhãn out-of-scope"
+          fi

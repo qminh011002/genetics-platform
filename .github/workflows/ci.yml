@@ -1,0 +1,442 @@
+# CI chính (T0105 · blueprint.md §4 · quality-standards.md §2–3 · ADR-0013).
+# Required check luôn có kết quả: không dùng `paths:` ở mức workflow. Job `setup` tính vùng đổi bằng dorny/paths-filter;
+# job sau luôn chạy và bỏ qua bước nặng *bên trong* khi vùng của nó không đổi → vẫn báo success.
+# Job phụ thuộc chạy cả khi `setup` lỗi (`!cancelled()`) và tự fail, để lỗi setup không biến thành "skipped = success".
+# Push `main` / chạy tay / PR sửa chính CI → chạy mọi thứ. deps-review + scope-check ở dependency-review.yml (cần chạy lại khi đổi nhãn / PR body).
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  FORCE_COLOR: '1'
+  TURBO_TELEMETRY_DISABLED: '1'
+  DO_NOT_TRACK: '1'
+  # PR: turbo `--affected` (output `affected` của setup) so với nhánh đích; push / chạy tay / PR đổi CI: chạy hết.
+  TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ steps.out.outputs.code }}
+      backend: ${{ steps.out.outputs.backend }}
+      contract: ${{ steps.out.outputs.contract }}
+      web: ${{ steps.out.outputs.web }}
+      mobile: ${{ steps.out.outputs.mobile }}
+      docker: ${{ steps.out.outputs.docker }}
+      infra: ${{ steps.out.outputs.infra }}
+      affected: ${{ steps.out.outputs.affected }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: code
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        with:
+          predicate-quantifier: every
+          filters: |
+            code:
+              - '**'
+              - '!docs/**'
+              - '!**/*.md'
+      - id: area
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        with:
+          filters: |
+            root: &root
+              - package.json
+              - pnpm-lock.yaml
+              - pnpm-workspace.yaml
+              - turbo.json
+              - .nvmrc
+              - 'tsconfig*.json'
+              - 'eslint.config*.js'
+            python: &python
+              - pyproject.toml
+              - uv.lock
+              - .python-version
+            backend:
+              - *python
+              - 'services/backend/**'
+            contract:
+              - *python
+              - 'services/backend/**'
+              - 'contracts/**'
+              - 'packages/api-client/**'
+            web:
+              - *root
+              - 'apps/web/**'
+              - 'packages/**'
+            mobile:
+              - *root
+              - 'apps/mobile/**'
+              - 'packages/**'
+            infra:
+              - 'infra/**'
+            docker:
+              - *root
+              - *python
+              - 'services/backend/**'
+              - 'apps/**'
+              - 'packages/**'
+              - 'infra/**'
+              - '**/Dockerfile'
+              - '**/.dockerignore'
+            ci:
+              - '.github/workflows/**'
+              - 'scripts/ci/**'
+      - id: out
+        name: Vùng đổi
+        env:
+          EVENT: ${{ github.event_name }}
+          CI_CHANGED: ${{ steps.area.outputs.ci }}
+          CODE: ${{ steps.code.outputs.code }}
+          BACKEND: ${{ steps.area.outputs.backend }}
+          CONTRACT: ${{ steps.area.outputs.contract }}
+          WEB: ${{ steps.area.outputs.web }}
+          MOBILE: ${{ steps.area.outputs.mobile }}
+          DOCKER: ${{ steps.area.outputs.docker }}
+          INFRA: ${{ steps.area.outputs.infra }}
+        run: |
+          AFFECTED=--affected
+          if [[ "$EVENT" != pull_request || "$CI_CHANGED" == true ]]; then
+            CODE=true BACKEND=true CONTRACT=true WEB=true MOBILE=true DOCKER=true INFRA=true AFFECTED=
+          fi
+          {
+            echo "code=$CODE"; echo "backend=$BACKEND"; echo "contract=$CONTRACT"; echo "web=$WEB"
+            echo "mobile=$MOBILE"; echo "docker=$DOCKER"; echo "infra=$INFRA"; echo "affected=$AFFECTED"
+          } | tee -a "$GITHUB_OUTPUT"
+      # Làm nóng cache pnpm store + uv cho các job song song phía sau.
+      - if: steps.out.outputs.code == 'true'
+        uses: ./scripts/ci/setup
+        with:
+          python: 'true'
+
+  lint:
+    needs: setup
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: setup phải xanh
+        if: needs.setup.result != 'success'
+        env:
+          RESULT: ${{ needs.setup.result }}
+        run: echo "::error::job setup = $RESULT" && exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./scripts/ci/setup
+        with:
+          python: ${{ needs.setup.outputs.code }}
+      - name: Prettier
+        run: pnpm format:check
+      - name: Catalog (version chỉ ở pnpm-workspace.yaml)
+        run: pnpm check:catalog
+      - name: Test script CI
+        run: node --test 'scripts/ci/*.test.mjs'
+      - name: Lint (ESLint, ruff, ruff format, import-linter)
+        if: needs.setup.outputs.code == 'true'
+        run: pnpm exec turbo run lint $AFFECTED
+        env:
+          AFFECTED: ${{ needs.setup.outputs.affected }}
+      - name: commitlint tiêu đề PR (squash merge dùng tiêu đề làm commit)
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s\n' "$PR_TITLE" | pnpm exec commitlint --verbose
+      - name: gitleaks
+        env:
+          GITLEAKS_VERSION: 8.30.1
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+          EVENT: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          tarball="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -fsSLo "$RUNNER_TEMP/$tarball" "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/$tarball"
+          echo "$GITLEAKS_SHA256  $RUNNER_TEMP/$tarball" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/$tarball" -C "$RUNNER_TEMP" gitleaks
+          if [[ "$EVENT" == pull_request ]]; then
+            range="origin/$BASE_REF..HEAD"
+          elif [[ "$EVENT" == push && -n "$BEFORE" && ! "$BEFORE" =~ ^0+$ ]]; then
+            range="$BEFORE..HEAD"
+          else
+            range=""
+          fi
+          "$RUNNER_TEMP/gitleaks" git --redact --verbose --no-banner ${range:+--log-opts="$range"} .
+
+  typecheck:
+    needs: setup
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: setup phải xanh
+        if: needs.setup.result != 'success'
+        env:
+          RESULT: ${{ needs.setup.result }}
+        run: echo "::error::job setup = $RESULT" && exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: needs.setup.outputs.code == 'true'
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./scripts/ci/setup
+        if: needs.setup.outputs.code == 'true'
+        with:
+          python: 'true'
+      - name: tsc + mypy
+        if: needs.setup.outputs.code == 'true'
+        run: pnpm exec turbo run typecheck $AFFECTED
+        env:
+          AFFECTED: ${{ needs.setup.outputs.affected }}
+      - name: Bỏ qua
+        if: needs.setup.outputs.code != 'true'
+        run: echo "Chỉ đổi tài liệu → không typecheck."
+
+  contract:
+    needs: setup
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: setup phải xanh
+        if: needs.setup.result != 'success'
+        env:
+          RESULT: ${{ needs.setup.result }}
+        run: echo "::error::job setup = $RESULT" && exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: needs.setup.outputs.contract == 'true'
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./scripts/ci/setup
+        if: needs.setup.outputs.contract == 'true'
+        with:
+          python: 'true'
+      - name: export-openapi + generate → diff contracts/ và generated/
+        if: needs.setup.outputs.contract == 'true'
+        run: pnpm contract:check
+      - name: File sinh chưa commit
+        if: needs.setup.outputs.contract == 'true'
+        run: |
+          untracked="$(git status --porcelain --untracked-files=all -- contracts packages/api-client/src/generated | grep '^??' || true)"
+          # Cảnh báo (chưa fail) cho tới khi T0305 commit contracts/openapi/openapi.json lần đầu.
+          if [[ -n "$untracked" ]]; then
+            echo "::warning title=contract::File sinh chưa được commit (chạy pnpm generate rồi commit):"$'\n'"$untracked"
+          fi
+      - name: Spectral
+        if: needs.setup.outputs.contract == 'true' && hashFiles('contracts/openapi/spectral.yaml') != ''
+        uses: stoplightio/spectral-action@6416fd018ae38e60136775066eb3e98172143141 # v0.8.13
+        with:
+          file_glob: contracts/openapi/openapi.json
+          spectral_ruleset: contracts/openapi/spectral.yaml
+      - id: base
+        name: Spec của nhánh đích + nhãn api-breaking
+        if: needs.setup.outputs.contract == 'true' && github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          PR: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if git cat-file -e "origin/$BASE_REF:contracts/openapi/openapi.json" 2>/dev/null \
+            && [[ -f contracts/openapi/openapi.json ]]; then
+            mkdir -p .ci-tmp
+            git show "origin/$BASE_REF:contracts/openapi/openapi.json" > .ci-tmp/base-openapi.json
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Nhánh đích chưa có contracts/openapi/openapi.json → bỏ qua oasdiff."
+          fi
+          # Đọc nhãn tại thời điểm chạy để "Re-run job" sau khi gắn nhãn có hiệu lực.
+          if gh pr view "$PR" --json labels --jq '.labels[].name' | grep -qx api-breaking; then
+            echo "api_breaking=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: oasdiff breaking (fail trừ khi có nhãn api-breaking)
+        if: steps.base.outputs.exists == 'true'
+        uses: oasdiff/oasdiff-action/breaking@9ce3a29eb0e6478dd0140932a678c7fb59d08f22 # v0.1.20
+        with:
+          base: .ci-tmp/base-openapi.json
+          revision: contracts/openapi/openapi.json
+          fail-on: ${{ steps.base.outputs.api_breaking != 'true' && 'ERR' || '' }}
+          review: 'false'
+      - name: Bỏ qua
+        if: needs.setup.outputs.contract != 'true'
+        run: echo "Không đổi backend / contracts / api-client → không kiểm hợp đồng."
+
+  test-backend:
+    needs: setup
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: setup phải xanh
+        if: needs.setup.result != 'success'
+        env:
+          RESULT: ${{ needs.setup.result }}
+        run: echo "::error::job setup = $RESULT" && exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: needs.setup.outputs.backend == 'true'
+        with:
+          persist-credentials: false
+      - uses: ./scripts/ci/setup
+        if: needs.setup.outputs.backend == 'true'
+        with:
+          python: 'true'
+          install: 'false'
+      # Postgres cho integration / migration up-down-up / schemathesis do testcontainers dựng trên Docker của runner.
+      - name: pytest (unit, integration, api, contract) + coverage
+        if: needs.setup.outputs.backend == 'true'
+        working-directory: services/backend
+        run: uv run --locked pytest --cov=genetics --cov-report=term-missing:skip-covered
+      - name: Bỏ qua
+        if: needs.setup.outputs.backend != 'true'
+        run: echo "Không đổi backend → không chạy pytest."
+
+  test-web:
+    needs: setup
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: setup phải xanh
+        if: needs.setup.result != 'success'
+        env:
+          RESULT: ${{ needs.setup.result }}
+        run: echo "::error::job setup = $RESULT" && exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: needs.setup.outputs.web == 'true'
+        with:
+          persist-credentials: false
+      - uses: ./scripts/ci/setup
+        if: needs.setup.outputs.web == 'true'
+      # Web + package nó dùng + mọi package dùng chung (test của packages/* chạy ở đây).
+      - name: Vitest (web + packages)
+        if: needs.setup.outputs.web == 'true'
+        run: pnpm exec turbo run test --filter='./apps/web...' --filter='./packages/*'
+      - name: Bỏ qua
+        if: needs.setup.outputs.web != 'true'
+        run: echo "Không đổi web / packages → không chạy test."
+
+  test-mobile:
+    needs: setup
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: setup phải xanh
+        if: needs.setup.result != 'success'
+        env:
+          RESULT: ${{ needs.setup.result }}
+        run: echo "::error::job setup = $RESULT" && exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: needs.setup.outputs.mobile == 'true'
+        with:
+          persist-credentials: false
+      - uses: ./scripts/ci/setup
+        if: needs.setup.outputs.mobile == 'true'
+      - name: Vitest (mobile + package nó dùng)
+        if: needs.setup.outputs.mobile == 'true'
+        run: pnpm exec turbo run test --filter='./apps/mobile...'
+      - name: Bỏ qua
+        if: needs.setup.outputs.mobile != 'true'
+        run: echo "Không đổi mobile / packages → không chạy test."
+
+  build:
+    needs: setup
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: setup phải xanh
+        if: needs.setup.result != 'success'
+        env:
+          RESULT: ${{ needs.setup.result }}
+        run: echo "::error::job setup = $RESULT" && exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: needs.setup.outputs.code == 'true'
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./scripts/ci/setup
+        if: needs.setup.outputs.code == 'true'
+        with:
+          python: 'true'
+      - name: turbo build
+        if: needs.setup.outputs.code == 'true'
+        run: pnpm exec turbo run build $AFFECTED
+        env:
+          AFFECTED: ${{ needs.setup.outputs.affected }}
+      - name: Compose hợp lệ + mọi service có healthcheck
+        if: needs.setup.outputs.infra == 'true'
+        run: bash scripts/ci/check-compose.sh
+      # Image: build để chắc build được + không chạy root (infrastructure.md §11); không push trên PR.
+      # Context / Dockerfile giữ khớp infra/compose.yaml và release.yml. Dockerfile chưa có (T0107 / T0108) → bỏ qua.
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+        if: needs.setup.outputs.docker == 'true'
+      - name: image api
+        if: needs.setup.outputs.docker == 'true' && hashFiles('services/backend/Dockerfile') != ''
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: services/backend
+          file: services/backend/Dockerfile
+          tags: genetics-api:ci
+          load: true
+          cache-from: type=gha,scope=api
+          cache-to: type=gha,scope=api,mode=max
+      - name: image web
+        if: needs.setup.outputs.docker == 'true' && hashFiles('apps/web/Dockerfile') != ''
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: apps/web/Dockerfile
+          tags: genetics-web:ci
+          load: true
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,scope=web,mode=max
+      - name: image mobile
+        if: needs.setup.outputs.docker == 'true' && hashFiles('apps/mobile/Dockerfile') != ''
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: apps/mobile/Dockerfile
+          tags: genetics-mobile:ci
+          load: true
+          cache-from: type=gha,scope=mobile
+          cache-to: type=gha,scope=mobile,mode=max
+      - name: Image không chạy root
+        if: needs.setup.outputs.docker == 'true'
+        run: |
+          fail=0
+          for img in genetics-api:ci genetics-web:ci genetics-mobile:ci; do
+            docker image inspect "$img" >/dev/null 2>&1 || { echo "$img: chưa có Dockerfile → bỏ qua"; continue; }
+            uid="$(docker run --rm --entrypoint id "$img" -u)"
+            echo "$img: uid=$uid"
+            [[ "$uid" != 0 ]] || { echo "::error title=image::$img chạy bằng root"; fail=1; }
+          done
+          exit "$fail"
+      - name: Bỏ qua
+        if: needs.setup.outputs.code != 'true'
+        run: echo "Chỉ đổi tài liệu → không build."

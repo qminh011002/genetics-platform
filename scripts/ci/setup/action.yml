@@ -1,0 +1,31 @@
+# Composite action dùng chung cho mọi job CI (T0105): pnpm (theo `packageManager`) + Node (.nvmrc) + cache store,
+# tuỳ chọn uv (cache theo uv.lock) + `uv sync --locked`. Gọi sau actions/checkout: `uses: ./scripts/ci/setup`.
+name: setup
+description: Cài pnpm + Node + (tuỳ chọn) uv, có cache, rồi cài dependency theo lockfile
+inputs:
+  python:
+    description: 'true = cài uv + `uv sync --locked` (backend)'
+    default: 'false'
+  install:
+    description: 'false = chỉ cài toolchain, không chạy `pnpm install`'
+    default: 'true'
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version-file: .nvmrc
+        cache: pnpm
+    - if: inputs.python == 'true'
+      uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+      with:
+        version: '0.13.5'
+        enable-cache: true
+        cache-dependency-glob: uv.lock
+    - if: inputs.install == 'true'
+      shell: bash
+      run: pnpm install --frozen-lockfile
+    - if: inputs.python == 'true'
+      shell: bash
+      run: uv sync --locked
