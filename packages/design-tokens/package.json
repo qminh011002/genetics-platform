@@ -1,0 +1,29 @@
+{
+  "name": "@genetics/design-tokens",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Design token (tokens.json) → web.css (Tailwind 4 @theme + biến shadcn OKLCH) và tokens.ts cho web + mobile",
+  "type": "module",
+  "files": [
+    "dist",
+    "tokens.json"
+  ],
+  "exports": {
+    "./web.css": "./dist/web.css",
+    "./tokens": "./dist/tokens.ts",
+    "./tokens.json": "./tokens.json"
+  },
+  "scripts": {
+    "build": "tsx scripts/build.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "eslint": "catalog:",
+    "tailwindcss": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
