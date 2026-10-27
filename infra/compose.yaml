@@ -150,7 +150,7 @@ services:
     logging: *default-logging
 
   nginx:
-    image: nginx:1.27-alpine
+    image: nginx:1.31-alpine
     restart: unless-stopped
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
