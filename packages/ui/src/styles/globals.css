@@ -1,0 +1,20 @@
+/* @genetics/ui · CSS nền cho web + mobile: app `@import '@genetics/ui/globals.css';` trong globals.css của app.
+   Màu / chữ / bo góc chỉ từ @genetics/design-tokens (design-system.md §3–5); file này không định nghĩa màu. */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@genetics/design-tokens/web.css';
+
+/* Không dark mode (ADR-0009) nhưng giữ variant để component shadcn không phải sửa. */
+@custom-variant dark (&:is(.dark *));
+
+@source '../**/*.{ts,tsx}';
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
