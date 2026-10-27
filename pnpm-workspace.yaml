@@ -6,6 +6,9 @@ packages:
   - packages/*
   - services/backend
 
+allowBuilds:
+  esbuild: true
+
 catalog:
   # React
   react: ^19.3.1
