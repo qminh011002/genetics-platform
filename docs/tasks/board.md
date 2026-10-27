@@ -19,7 +19,7 @@ Tổng: 39 task (38 làm + 1 lập kế hoạch wave kế) · E01: 10 · E02: 7 
 | T0109 | [Kích hoạt file hướng dẫn agent và quy trình](items/E01/T0109-kich-hoat-file-huong-dan-agent-va-quy-trinh.md) | E01 | Claude Planner | P0 | S | T0101 | todo | |
 | T0110 | [Thiết lập GitHub](items/E01/T0110-thiet-lap-github.md) | E01 | Chủ dự án / IT | P0 | S | T0105 | todo | |
 | T0301 | [Backend skeleton](items/E03/T0301-backend-skeleton.md) | E03 | Codex | P0 | L | T0101 | in_review | nhánh `backend/T0301-backend-skeleton` (chưa push) |
-| T0302 | [Migrations nền](items/E03/T0302-migrations-nen.md) | E03 | Codex | P0 | M | T0301 | todo | |
+| T0302 | [Migrations nền](items/E03/T0302-migrations-nen.md) | E03 | Codex | P0 | M | T0301 | in_review | [PR #5](https://github.com/qminh011002/genetics-platform/pull/5) draft; CI xanh, 16 test migration PG18; chờ Docker + review |
 | T0303 | [Lỗi problem+json + danh mục mã lỗi, pagination cursor/offset, If-Match](items/E03/T0303-loi-problem-json-danh-muc-ma-loi-pagination-cursor.md) | E03 | Codex | P0 | M | T0301, T0104 | todo | |
 | T0304 | [Session / UnitOfWork với set_config(app.*), Procrastinate app + worker](items/E03/T0304-session-unitofwork-voi-set-config-app-procrastinat.md) | E03 | Codex | P0 | L | T0302 | todo | |
 | T0305 | [Hợp đồng](items/E03/T0305-hop-ong.md) | E03 | Codex | P0 | M | T0303 | todo | |
