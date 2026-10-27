@@ -49,10 +49,10 @@ Không làm:
 - Đã giải quyết: người dùng cho phép thêm `services/backend/alembic.ini` vào `allowed_paths` và xác nhận hoàn tất T0302 trong phiên này.
 
 ## Kết quả (điền khi xong)
-- PR: đang chuẩn bị từ nhánh `backend/T0302-foundation-migrations`.
+- PR: [#5](https://github.com/qminh011002/genetics-platform/pull/5) (draft, chờ kiểm testcontainers trên Docker).
 - Worktree: `/tmp/genetics-platform-T0302`; base `main` đã có T0301 (`a19aad9`).
 - Đã thêm cấu hình Alembic async đọc `MIGRATION_DATABASE_URL` qua Settings, `include_schemas`, metadata và đăng ký PGFunction/PGTrigger/PGView cho autogenerate. URL truyền trực tiếp vào engine, không qua nội suy INI (test password chứa `%`).
-- `0001_schemas`: bốn schema thuộc `app_migrator`, quyền theo schema; thu hẹp default privileges rộng từ init infra, chặn sửa bảng phiên bản Alembic. Role/mật khẩu do init infra tạo, migration không tạo/xóa role. PostgreSQL 18 có sẵn `gen_random_uuid()`, không cần extension pgcrypto (backend §7.6, overview §6.3).
+- `0001_schemas`: bốn schema thuộc `app_migrator`, quyền theo schema; thu hẹp default privileges rộng từ init infra, chặn sửa bảng phiên bản Alembic, giữ SELECT cho CLI `genetics db-current`. Role/mật khẩu do init infra tạo, migration không tạo/xóa role. PostgreSQL 18 có sẵn `gen_random_uuid()`, không cần extension pgcrypto (backend §7.6, overview §6.3).
 - `0002_audit`: audit_log, index tra theo bảng/id, PGFunction SECURITY DEFINER với search_path cố định; lưu actor/device/reason/request, ảnh cũ/mới và action I/U/D. App chỉ đọc log, trigger ghi dưới quyền owner.
 - `0003_idempotency`: khóa `(key, user_id)`, hash/response JSONB/timestamp và index cho user/cleanup 72 giờ; FK user bổ sung ở `0004`.
 - `0004_app_user`: identity nền, role_id nullable chờ T0201, user hệ thống `00000000-0000-0000-0000-000000000001`, audit trigger và seed idempotent. Seed khôi phục audit context sau khi chạy.
@@ -65,18 +65,18 @@ Không làm:
 | 1. Schema, role, bảng; up/down/up | `test_upgrade_downgrade_upgrade_and_check`: kiểm 4 schema, 3 role không superuser/BYPASSRLS, owner, bảng, seed duy nhất, downgrade sạch rồi upgrade lại | PASS trên PostgreSQL 18 |
 | 2. INSERT audit đúng actor | `test_app_role_audits_insert_update_delete_with_context`: đăng nhập app_rw, set_config, kiểm I/U/D, actor, reason/device/request, old/new; context không rò sang transaction sau | PASS |
 | 3. alembic check sạch | `command.check` sau cả hai lượt upgrade; test drift cố ý đổi cột/default/function hoặc xóa trigger phải phát hiện | PASS |
-| Bổ sung | Rollback audit cùng dữ liệu; cấm sửa/xóa/chèn/truncate audit và tắt trigger; quyền bảng mới theo schema; analytics chỉ đọc; uniqueness/FK idempotency; ReplaceablePolicy create/replace/restore/drop | PASS |
+| Bổ sung | Rollback audit cùng dữ liệu; cấm sửa/xóa/chèn/truncate audit và tắt trigger; app_rw đọc nhưng không sửa phiên bản Alembic; quyền bảng mới theo schema; analytics chỉ đọc; uniqueness/FK idempotency; ReplaceablePolicy create/replace/restore/drop | PASS |
 
 ### Lệnh kiểm và kết quả
 ```text
 TEST_POSTGRES_URL=postgresql+psycopg://postgres@127.0.0.1:55432/test_t0302 \
   uv run pytest -m integration tests/integration/test_migrations.py -q
-15 passed in 1.92s
+16 passed
 
 TEST_POSTGRES_URL=postgresql+psycopg://postgres@127.0.0.1:55432/test_t0302 \
   TURBO_ENV_MODE=loose pnpm run ci
 exit 0: format:check, check:catalog, lint, typecheck, test, contract:check, build
-backend: 23 passed in 1.80s (15 integration + 8 tests có sẵn)
+backend: 24 passed in 1.86s (16 integration + 8 tests có sẵn)
 design-tokens: 56 passed; shared: 49 passed
 ruff: All checks passed, 109 files already formatted
 import-linter: 19 kept, 0 broken

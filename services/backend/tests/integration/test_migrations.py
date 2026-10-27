@@ -229,6 +229,21 @@ def test_audit_rolls_back_with_business_write(migrated):
         )
 
 
+def test_app_role_can_read_but_not_change_migration_version(migrated, postgres_url):
+    rw = sa.create_engine(role_url(postgres_url, "app_rw"))
+    try:
+        with rw.connect() as conn:
+            assert (
+                conn.scalar(sa.text("SELECT version_num FROM public.alembic_version"))
+                == "0004_app_user"
+            )
+            with pytest.raises(DBAPIError) as error:
+                conn.execute(sa.text("DELETE FROM public.alembic_version"))
+            assert error.value.orig.sqlstate == "42501"
+    finally:
+        rw.dispose()
+
+
 @pytest.mark.parametrize(
     "statement",
     [

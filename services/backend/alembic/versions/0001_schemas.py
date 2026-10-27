@@ -38,6 +38,8 @@ def upgrade() -> None:
     )
     # The version table is created before this revision and may inherit infra grants.
     op.execute("REVOKE ALL ON public.alembic_version FROM app_rw, app_analytics_ro")
+    # genetics db-current uses the application's connection to inspect the revision.
+    op.execute("GRANT SELECT ON public.alembic_version TO app_rw")
     for schema in ("core", "auth"):
         op.execute(f'GRANT USAGE ON SCHEMA "{schema}" TO app_rw')
         op.execute(
