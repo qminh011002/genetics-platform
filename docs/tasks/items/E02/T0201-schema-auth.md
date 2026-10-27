@@ -2,7 +2,7 @@
 id: T0201
 title: Schema auth: role, permission, role_permission, user_permission, user_scope + seed 4 vai trò và danh mục quyền; auth.has_perm()
 epic: E02
-status: todo
+status: ready
 area: backend
 type: feature
 priority: P0

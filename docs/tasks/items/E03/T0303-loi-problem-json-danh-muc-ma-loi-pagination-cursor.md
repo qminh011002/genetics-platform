@@ -2,7 +2,7 @@
 id: T0303
 title: Lỗi problem+json + danh mục mã lỗi, pagination cursor/offset, If-Match / ETag / version, test so khớp codes với packages/shared
 epic: E03
-status: todo
+status: ready
 area: backend
 type: feature
 priority: P0

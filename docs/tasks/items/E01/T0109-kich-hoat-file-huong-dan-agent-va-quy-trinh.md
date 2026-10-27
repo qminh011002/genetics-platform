@@ -2,7 +2,7 @@
 id: T0109
 title: Kích hoạt file hướng dẫn agent và quy trình: AGENTS.md theo app, .claude/rules, hooks scope-guard, settings, .codex/setup.sh, CODEOWNERS, PR template
 epic: E01
-status: todo
+status: ready
 area: docs
 type: chore
 priority: P0

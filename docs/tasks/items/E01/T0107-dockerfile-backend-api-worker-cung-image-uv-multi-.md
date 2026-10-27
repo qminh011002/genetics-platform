@@ -2,7 +2,7 @@
 id: T0107
 title: Dockerfile backend (api + worker cùng image, uv multi-stage, WeasyPrint deps, non-root, entrypoint migrate)
 epic: E01
-status: todo
+status: ready
 area: backend
 type: chore
 priority: P0

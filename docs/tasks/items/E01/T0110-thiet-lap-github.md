@@ -2,7 +2,7 @@
 id: T0110
 title: Thiết lập GitHub: ruleset main (required checks, review, squash, linear), labels, GHCR, Dependabot bật
 epic: E01
-status: todo
+status: ready
 area: infra
 type: chore
 priority: P0

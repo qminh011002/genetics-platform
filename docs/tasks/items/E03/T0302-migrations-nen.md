@@ -2,7 +2,7 @@
 id: T0302
 title: Migrations nền: 0001 schemas + roles + extension, audit trigger, idempotency_key; Alembic async env với alembic_utils; test up/down/up
 epic: E03
-status: in_review
+status: done
 area: backend
 type: feature
 priority: P0
@@ -95,7 +95,8 @@ exit 0
 - Không thêm dependency, không sửa file sinh tay, không sửa migration đã merge.
 
 ### Còn lại
-- Chạy lại nhánh testcontainers trên máy/CI có Docker; review người và merge PR. Chưa coi task đã merge.
+- ~~Chạy lại nhánh testcontainers trên CI có Docker~~ — xong 2026-10-27 (Planner, PR tạm #7 gộp workflow T0105): 11 check CI xanh; `test-backend` 24 passed, 16 test `test_migrations.py` trên testcontainers `postgres:18`, coverage 88 %.
+- GitGuardian báo "Generic Password" ở `tests/integration/test_migrations.py:31` (mật khẩu giả cho container test) → đánh dấu false positive trên dashboard GitGuardian.
 - Downgrade xóa dữ liệu trong bốn schema; giữ role/password, bảng alembic_version rỗng và global defaults đã thu hẹp. Không dùng CASCADE. Không có thay đổi bảng nghiệp vụ hoặc RLS policy.
 
 ### Lệnh để tiếp tục
