@@ -1,0 +1,25 @@
+# Nhãn PR dùng bởi CI và quy trình (ADR-0014, quality-standards.md §6). Đồng bộ: scripts/ci/labels.sh
+- name: contract
+  color: '1d76db'
+  description: Đổi API / contracts/ + api-client sinh lại
+- name: api-breaking
+  color: 'b60205'
+  description: Thay đổi phá vỡ API (oasdiff breaking được chấp nhận, kèm kế hoạch)
+- name: deps-approved
+  color: '0e8a16'
+  description: Người đã duyệt dependency mới / lockfile đổi (job deps-review)
+- name: shared
+  color: '5319e7'
+  description: Sửa packages/ui, shared, design-tokens (Planner duyệt)
+- name: visual-change
+  color: 'fbca04'
+  description: Baseline visual regression đổi, ảnh đã được duyệt
+- name: out-of-scope
+  color: 'd93f0b'
+  description: Diff ngoài allowed_paths của task (scope-check gắn), cần người duyệt
+- name: e2e
+  color: 'c5def5'
+  description: Chạy e2e Playwright trên PR này (nightly.yml)
+- name: dependencies
+  color: '0366d6'
+  description: PR Dependabot
