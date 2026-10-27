@@ -128,3 +128,4 @@ Camera chỉ chạy trên HTTPS. Cách nhanh: `pnpm --filter @genetics/mobile de
 | Web báo 403 `platform_not_allowed` | đang dùng token mobile / vai trò Worker trên web — đúng hành vi |
 | Playwright khác ảnh baseline | chạy trong image pin (`pnpm test:visual`), không chạy trên máy host |
 | Postgres 18 không mount volume cũ | image 18 đổi `PGDATA`: mount `/var/lib/postgresql`, không phải `/var/lib/postgresql/data` |
+
