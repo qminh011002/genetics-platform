@@ -42,7 +42,9 @@ catalog:
   # UI
   tailwindcss: ^4.3.3
   '@tailwindcss/vite': ^4.3.3
-  '@base-ui-components/react': 1.0.0-rc.0
+  '@base-ui/react': ^1.9.0 # tên mới của @base-ui-components/react; shadcn 4 -b base (T0103)
+  shadcn: ^4.22.1 # CLI + shadcn/tailwind.css (custom variant data-open…) cho packages/ui
+  react-day-picker: ^10.0.2 # shadcn calendar
   lucide-react: ^1.61.0
   clsx: ^2.1.1
   tailwind-merge: ^3.7.0

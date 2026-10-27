@@ -10,7 +10,7 @@ Tổng: 39 task (38 làm + 1 lập kế hoạch wave kế) · E01: 10 · E02: 7 
 |---|---|---|---|---|---|---|---|---|
 | T0101 | [Khởi tạo gốc monorepo](items/E01/T0101-khoi-tao-goc-monorepo.md) | E01 | Claude Planner | P0 | M | — | in_review | nhánh `infra/T0101-khoi-tao-goc-monorepo` (chưa push) |
 | T0102 | [Package design-tokens](items/E01/T0102-package-design-tokens.md) | E01 | Claude Planner | P0 | M | T0101 | in_review | nhánh `shared/T0102-package-design-tokens` (chưa push) |
-| T0103 | [Package ui](items/E01/T0103-package-ui.md) | E01 | Claude (web) | P0 | L | T0101, T0102 | todo | |
+| T0103 | [Package ui](items/E01/T0103-package-ui.md) | E01 | Claude (web) | P0 | L | T0101, T0102 | in_review | [#6](https://github.com/qminh011002/genetics-platform/pull/6) |
 | T0104 | [Package shared](items/E01/T0104-package-shared.md) | E01 | Claude (web) | P0 | M | T0101 | in_review | nhánh `shared/T0104-package-shared` (chưa push) |
 | T0105 | [CI](items/E01/T0105-ci.md) | E01 | Claude Planner | P0 | L | T0101 | todo | |
 | T0106 | [Infra](items/E01/T0106-infra.md) | E01 | Claude Planner | P0 | L | T0101 | in_review | nhánh `infra/T0106-infra` (chưa push) |
