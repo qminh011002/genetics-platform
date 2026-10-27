@@ -1,0 +1,216 @@
+/* File sinh bởi @genetics/design-tokens (scripts/build.ts) từ tokens.json — không sửa tay. */
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.1452 0.0021 286.13);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.1452 0.0021 286.13);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.1452 0.0021 286.13);
+  --primary: oklch(0.4163 0.1944 262.24);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9674 0.0013 286.38);
+  --secondary-foreground: oklch(0.1452 0.0021 286.13);
+  --muted: oklch(0.9674 0.0013 286.38);
+  --muted-foreground: oklch(0.489 0.0158 285.8);
+  --accent: oklch(0.9674 0.0013 286.38);
+  --accent-foreground: oklch(0.1452 0.0021 286.13);
+  --destructive: oklch(0.5349 0.2026 27.61);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9197 0.004 286.32);
+  --input: oklch(0.9197 0.004 286.32);
+  --ring: oklch(0.4163 0.1944 262.24);
+  --radius: 8px;
+}
+
+/* Không dark mode (ADR-0009); giữ block để component shadcn không cần cài lại. */
+.dark {
+}
+
+@theme inline {
+  /* Chữ (design-system.md §4) */
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace;
+  --text-display: 30px;
+  --text-display--line-height: 38px;
+  --text-display--font-weight: 600;
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: 24px;
+  --text-h1--line-height: 32px;
+  --text-h1--font-weight: 600;
+  --text-h1--letter-spacing: -0.01em;
+  --text-h2: 18px;
+  --text-h2--line-height: 26px;
+  --text-h2--font-weight: 600;
+  --text-h3: 15px;
+  --text-h3--line-height: 22px;
+  --text-h3--font-weight: 600;
+  --text-body: 14px;
+  --text-body--line-height: 20px;
+  --text-body--font-weight: 400;
+  --text-body-sm: 13px;
+  --text-body-sm--line-height: 18px;
+  --text-body-sm--font-weight: 400;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--font-weight: 400;
+  --text-overline: 11px;
+  --text-overline--line-height: 16px;
+  --text-overline--font-weight: 600;
+  --text-overline--letter-spacing: 0.04em;
+  --text-stat: 28px;
+  --text-stat--line-height: 34px;
+  --text-stat--font-weight: 600;
+  --text-stat--letter-spacing: -0.02em;
+  --text-stat-sm: 22px;
+  --text-stat-sm--line-height: 28px;
+  --text-stat-sm--font-weight: 600;
+  --text-code: 13px;
+  --text-code--font-weight: 500;
+  --text-m-title: 16px;
+  --text-m-title--line-height: 22px;
+  --text-m-title--font-weight: 600;
+  --text-m-input: 16px;
+  --text-m-input--font-weight: 400;
+
+  /* Màu (design-system.md §3) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: oklch(0.3801 0.1808 262.5);
+  --color-primary-soft: oklch(0.951 0.0203 264.47);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-subtle-foreground: oklch(0.5517 0.0138 285.94);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-border-soft: oklch(0.9557 0.0027 286.35);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: oklch(0.5273 0.1371 150.07);
+  --color-warning: oklch(0.6658 0.1574 58.32);
+  --color-surface: oklch(0.9759 0.0029 264.54);
+  --color-panel: oklch(0.9819 0.0029 264.54);
+  --color-table-head: oklch(0.9851 0 0);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-scrim: rgba(9,9,11,.5);
+  --color-status-open-bg: oklch(0.951 0.0203 264.47);
+  --color-status-open-fg: oklch(0.4163 0.1944 262.24);
+  --color-status-pending-bg: oklch(0.9619 0.058 95.62);
+  --color-status-pending-fg: oklch(0.4793 0.1104 58.6);
+  --color-status-ok-bg: oklch(0.9624 0.0434 156.74);
+  --color-status-ok-fg: oklch(0.4479 0.1083 151.33);
+  --color-status-closed-bg: oklch(0.9674 0.0013 286.38);
+  --color-status-closed-fg: oklch(0.3703 0.0119 285.81);
+  --color-status-error-bg: oklch(0.9356 0.0309 17.72);
+  --color-status-error-fg: oklch(0.4437 0.1613 26.9);
+  --color-status-warning-bg: oklch(0.9717 0.0231 75.86);
+  --color-status-warning-fg: oklch(0.5061 0.126 54.57);
+  --color-status-outline-bg: oklch(1 0 0);
+  --color-status-outline-fg: oklch(0.3703 0.0119 285.81);
+  --color-status-outline-border: oklch(0.9197 0.004 286.32);
+  --color-strain-tma-bg: oklch(0.9619 0.0179 272.31);
+  --color-strain-tma-fg: oklch(0.3984 0.1773 277.37);
+  --color-strain-tma-chart: oklch(0.4568 0.2146 277.02);
+  --color-strain-tme-bg: oklch(0.956 0.0193 184.91);
+  --color-strain-tme-fg: oklch(0.437 0.0705 188.22);
+  --color-strain-tme-chart: oklch(0.5109 0.0861 186.39);
+  --color-strain-ref-bg: oklch(0.9647 0.0271 72.81);
+  --color-strain-ref-fg: oklch(0.4777 0.12 53.8);
+  --color-strain-ref-chart: oklch(0.5534 0.1739 38.4);
+  --color-strain-msa-bg: oklch(0.9632 0.0192 343.94);
+  --color-strain-msa-fg: oklch(0.4587 0.1697 3.82);
+  --color-strain-msa-chart: oklch(0.5246 0.199 3.96);
+  --color-strain-msb-bg: oklch(0.9599 0.0217 297.42);
+  --color-strain-msb-fg: oklch(0.432 0.2106 292.76);
+  --color-strain-msb-chart: oklch(0.4907 0.2412 292.58);
+  --color-strain-msc-bg: oklch(0.9645 0.0184 209.43);
+  --color-strain-msc-fg: oklch(0.45 0.0771 224.28);
+  --color-strain-msc-chart: oklch(0.5198 0.0936 223.13);
+  --color-stat: oklch(0.9728 0.0057 264.53);
+  --color-stat-blue: oklch(0.9603 0.0144 264.5);
+  --color-stat-green: oklch(0.9622 0.0157 160.62);
+  --color-stat-amber: oklch(0.9696 0.0204 81.78);
+  --color-stat-red: oklch(0.9621 0.0142 22.76);
+  --color-stat-violet: oklch(0.9582 0.0176 296.63);
+  --color-stat-teal: oklch(0.9599 0.014 185.96);
+  --color-stat-gray: oklch(0.9677 0.0027 286.35);
+  --color-stat-hero-bg: oklch(0.4163 0.1944 262.24);
+  --color-stat-hero-fg: oklch(1 0 0);
+  --color-stat-hero-muted: oklch(0.901 0.0402 268.52);
+  --color-delta-up-bg: oklch(0.9308 0.0364 158.01);
+  --color-delta-up-fg: oklch(0.3925 0.0896 152.54);
+  --color-delta-down-bg: oklch(0.9189 0.0334 20.06);
+  --color-delta-down-fg: oklch(0.4263 0.1497 26.35);
+  --color-delta-flat-bg: oklch(0.9264 0.0067 286.27);
+  --color-delta-flat-fg: oklch(0.3703 0.0119 285.81);
+  --color-delta-warn-bg: oklch(0.9357 0.0484 80.31);
+  --color-delta-warn-fg: oklch(0.4316 0.1049 56.61);
+  --color-alert-info-bg: oklch(0.9754 0.0115 264.51);
+  --color-alert-info-border: oklch(0.8808 0.0459 264.91);
+  --color-alert-info-fg: oklch(0.3089 0.1195 262.25);
+  --color-alert-warn-bg: oklch(0.9862 0.0142 84.58);
+  --color-alert-warn-border: oklch(0.8968 0.0707 81.43);
+  --color-alert-warn-fg: oklch(0.4013 0.0931 61.15);
+  --color-alert-error-bg: oklch(0.9779 0.0107 17.34);
+  --color-alert-error-border: oklch(0.853 0.0587 18.37);
+  --color-alert-error-fg: oklch(0.3958 0.1331 25.72);
+  --color-alert-ok-bg: oklch(0.9797 0.0123 157.01);
+  --color-alert-ok-border: oklch(0.8878 0.0524 156.36);
+  --color-alert-ok-fg: oklch(0.3925 0.0896 152.54);
+  --color-row-error: oklch(0.9779 0.0107 17.34);
+  --color-row-warning: oklch(0.9862 0.0142 84.58);
+  --color-row-selected: oklch(0.9754 0.0115 264.51);
+  --color-sex-female: oklch(0.8411 0.0799 350.17);
+  --color-sex-male: oklch(0.8153 0.0765 263.3);
+  --color-sex-pending-bg: oklch(1 0 0);
+  --color-sex-pending-border: oklch(0.7118 0.0129 286.07);
+  --color-sex-warning: oklch(0.7686 0.1647 70.08);
+  --color-sex-current: oklch(0.4163 0.1944 262.24);
+  --color-chart-1: oklch(0.4163 0.1944 262.24);
+  --color-chart-secondary: oklch(0.7571 0.0899 263.81);
+  --color-chart-target: oklch(0.6658 0.1574 58.32);
+  --color-chart-grid: oklch(0.9442 0.0053 286.3);
+  --color-chart-axis: oklch(0.489 0.0158 285.8);
+
+  /* Kích thước (design-system.md §5; lưới 4 px = --spacing mặc định của Tailwind) */
+  --spacing-sidebar: 248px;
+  --spacing-content: 1240px;
+  --spacing-button-sm: 32px;
+  --spacing-button-md: 36px;
+  --spacing-button-lg: 44px;
+  --spacing-button-xl: 52px;
+  --spacing-input-md: 36px;
+  --spacing-input-lg: 48px;
+  --spacing-segmented: 48px;
+  --spacing-list-row: 56px;
+  --spacing-tab-bar: 60px;
+  --spacing-mobile-header: 60px;
+  --spacing-touch: 44px;
+  --spacing-touch-primary: 48px;
+  --spacing-badge: 22px;
+
+  /* Bo góc */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 14px;
+  --radius-sheet: 20px;
+  --radius-full: 999px;
+
+  /* Bóng */
+  --shadow-xs: 0 1px 2px rgba(10,10,11,.1);
+  --shadow-overlay: 0 20px 50px rgba(9,9,11,.25);
+  --shadow-toast: 0 10px 30px rgba(9,9,11,.25);
+  --shadow-sheet: 0 -8px 30px rgba(10,10,11,.18);
+}
