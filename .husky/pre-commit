@@ -1,0 +1,10 @@
+pnpm exec lint-staged
+
+# Python: ruff, lint-imports, gitleaks qua .pre-commit-config.yaml (chỉ file đã stage).
+if command -v pre-commit >/dev/null 2>&1; then
+  pre-commit run
+elif command -v uvx >/dev/null 2>&1; then
+  uvx pre-commit run
+else
+  echo "pre-commit: chưa cài (pip/uv tool install pre-commit) — bỏ qua ruff/lint-imports/gitleaks ở local; CI vẫn chạy." >&2
+fi

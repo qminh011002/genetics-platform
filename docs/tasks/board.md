@@ -8,17 +8,17 @@ Tổng: 39 task (38 làm + 1 lập kế hoạch wave kế) · E01: 10 · E02: 7 
 
 | ID | Task | Epic | Owner | P | Size | Phụ thuộc | Trạng thái | PR |
 |---|---|---|---|---|---|---|---|---|
-| T0101 | [Khởi tạo gốc monorepo](items/E01/T0101-khoi-tao-goc-monorepo.md) | E01 | Claude Planner | P0 | M | — | ready | |
-| T0102 | [Package design-tokens](items/E01/T0102-package-design-tokens.md) | E01 | Claude Planner | P0 | M | T0101 | todo | |
+| T0101 | [Khởi tạo gốc monorepo](items/E01/T0101-khoi-tao-goc-monorepo.md) | E01 | Claude Planner | P0 | M | — | in_review | nhánh `infra/T0101-khoi-tao-goc-monorepo` (chưa push) |
+| T0102 | [Package design-tokens](items/E01/T0102-package-design-tokens.md) | E01 | Claude Planner | P0 | M | T0101 | in_review | nhánh `shared/T0102-package-design-tokens` (chưa push) |
 | T0103 | [Package ui](items/E01/T0103-package-ui.md) | E01 | Claude (web) | P0 | L | T0101, T0102 | todo | |
-| T0104 | [Package shared](items/E01/T0104-package-shared.md) | E01 | Claude (web) | P0 | M | T0101 | todo | |
+| T0104 | [Package shared](items/E01/T0104-package-shared.md) | E01 | Claude (web) | P0 | M | T0101 | in_review | nhánh `shared/T0104-package-shared` (chưa push) |
 | T0105 | [CI](items/E01/T0105-ci.md) | E01 | Claude Planner | P0 | L | T0101 | todo | |
-| T0106 | [Infra](items/E01/T0106-infra.md) | E01 | Claude Planner | P0 | L | T0101 | todo | |
+| T0106 | [Infra](items/E01/T0106-infra.md) | E01 | Claude Planner | P0 | L | T0101 | in_review | nhánh `infra/T0106-infra` (chưa push) |
 | T0107 | [Dockerfile backend (api + worker cùng image, uv multi-stage, WeasyPrin](items/E01/T0107-dockerfile-backend-api-worker-cung-image-uv-multi-.md) | E01 | Codex | P0 | S | T0301 | todo | |
 | T0108 | [Dockerfile web và mobile (pnpm fetch + build + nginx static)](items/E01/T0108-dockerfile-web-va-mobile-pnpm-fetch-build-nginx-st.md) | E01 | Claude (web) | P0 | S | T0401, T0404 | todo | |
 | T0109 | [Kích hoạt file hướng dẫn agent và quy trình](items/E01/T0109-kich-hoat-file-huong-dan-agent-va-quy-trinh.md) | E01 | Claude Planner | P0 | S | T0101 | todo | |
 | T0110 | [Thiết lập GitHub](items/E01/T0110-thiet-lap-github.md) | E01 | Chủ dự án / IT | P0 | S | T0105 | todo | |
-| T0301 | [Backend skeleton](items/E03/T0301-backend-skeleton.md) | E03 | Codex | P0 | L | T0101 | todo | |
+| T0301 | [Backend skeleton](items/E03/T0301-backend-skeleton.md) | E03 | Codex | P0 | L | T0101 | in_review | nhánh `backend/T0301-backend-skeleton` (chưa push) |
 | T0302 | [Migrations nền](items/E03/T0302-migrations-nen.md) | E03 | Codex | P0 | M | T0301 | todo | |
 | T0303 | [Lỗi problem+json + danh mục mã lỗi, pagination cursor/offset, If-Match](items/E03/T0303-loi-problem-json-danh-muc-ma-loi-pagination-cursor.md) | E03 | Codex | P0 | M | T0301, T0104 | todo | |
 | T0304 | [Session / UnitOfWork với set_config(app.*), Procrastinate app + worker](items/E03/T0304-session-unitofwork-voi-set-config-app-procrastinat.md) | E03 | Codex | P0 | L | T0302 | todo | |

@@ -1,0 +1,20 @@
+* text=auto eol=lf
+
+# File sinh (không sửa tay; ẩn khi review, không tính thống kê ngôn ngữ)
+contracts/openapi/*.json linguist-generated
+packages/api-client/src/generated/** linguist-generated
+packages/design-tokens/dist/** linguist-generated
+pnpm-lock.yaml linguist-generated -diff
+uv.lock linguist-generated -diff
+
+# Binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+*.xlsx binary

@@ -1,0 +1,31 @@
+# Gốc uv workspace (ADR-0001): một uv.lock cho backend + tools. Cài: `uv sync --locked`.
+# Member mới = thêm vào `members` (T0301 tạo services/backend/pyproject.toml).
+[tool.uv.workspace]
+members = ["services/backend", "tools/legacy_import"]
+
+# Ruff / mypy chung cho mọi member (docs/architecture/quality-standards.md §2.1).
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "ASYNC", "S", "I", "DTZ"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101", "S105", "S106", "DTZ"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.13"
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["genetics.modules.*.domain.*", "genetics.modules.*.application.*"]
+strict = true
