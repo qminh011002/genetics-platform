@@ -1,0 +1,16 @@
+{
+  "name": "@genetics/backend",
+  "version": "0.0.0",
+  "private": true,
+  "description": "FastAPI backend; mọi script bọc uv (setup-guide.md §3).",
+  "scripts": {
+    "dev": "uv run genetics api --reload",
+    "worker": "uv run genetics worker",
+    "lint": "uv run ruff check . && uv run ruff format --check . && uv run lint-imports",
+    "typecheck": "uv run mypy --config-file ../../pyproject.toml src",
+    "test": "uv run pytest",
+    "build": "uv build --out-dir dist",
+    "export-openapi": "mkdir -p ../../contracts/openapi && uv run genetics export-openapi > ../../contracts/openapi/openapi.json",
+    "migrate": "uv run alembic upgrade head"
+  }
+}

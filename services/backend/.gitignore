@@ -1,0 +1,2 @@
+# Cache cục bộ của import-linter (gốc .gitignore ngoài allowed_paths của T0301)
+.import_linter_cache/
