@@ -1,0 +1,203 @@
+# import-linter (backend.md §4, §16; ADR-0002). Chạy: `uv run lint-imports`.
+# Lớp trong mỗi module: api | infrastructure (độc lập nhau) > application > domain.
+# Module nói chuyện chỉ qua `<module>/application/public.py`; graph module không vòng.
+[importlinter]
+root_packages =
+    genetics
+include_external_packages = True
+
+[importlinter:contract:shared-kernel-layers]
+name = shared_kernel: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.shared_kernel
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:shared-kernel-no-modules]
+name = shared_kernel không import module nào
+type = forbidden
+source_modules =
+    genetics.shared_kernel
+forbidden_modules =
+    genetics.modules
+    genetics.bootstrap
+    genetics.jobs
+
+[importlinter:contract:domain-pure]
+name = domain thuần Python: cấm FastAPI / SQLAlchemy / Pydantic / httpx
+type = forbidden
+source_modules =
+    genetics.shared_kernel.domain
+    genetics.modules.*.domain
+forbidden_modules =
+    fastapi
+    starlette
+    sqlalchemy
+    psycopg
+    alembic
+    pydantic
+    pydantic_settings
+    httpx
+    procrastinate
+
+[importlinter:contract:application-no-framework]
+name = application: cấm FastAPI / SQLAlchemy (port là Protocol, DTO là dataclass)
+type = forbidden
+source_modules =
+    genetics.shared_kernel.application
+    genetics.modules.*.application
+forbidden_modules =
+    fastapi
+    starlette
+    sqlalchemy
+    psycopg
+    alembic
+    procrastinate
+
+[importlinter:contract:modules-independence]
+name = module độc lập, trừ qua application.public của module khác
+type = independence
+modules =
+    genetics.modules.*
+ignore_imports =
+    genetics.modules.*.application.** -> genetics.modules.*.application.public
+unmatched_ignore_imports_alerting = none
+
+[importlinter:contract:modules-acyclic]
+name = graph module là DAG (backend.md §6)
+type = acyclic_siblings
+ancestors =
+    genetics.modules
+
+[importlinter:contract:layers-identity]
+name = identity: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.identity
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-files]
+name = files: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.files
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-notifications]
+name = notifications: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.notifications
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-reference]
+name = reference: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.reference
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-quality]
+name = quality: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.quality
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-work]
+name = work: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.work
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-labels]
+name = labels: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.labels
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-breeding]
+name = breeding: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.breeding
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-selective]
+name = selective: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.selective
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-imports]
+name = imports: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.imports
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-projects]
+name = projects: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.projects
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-analytics]
+name = analytics: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.analytics
+layers =
+    api | infrastructure
+    application
+    domain
+
+[importlinter:contract:layers-audit]
+name = audit: api | infrastructure > application > domain
+type = layers
+containers =
+    genetics.modules.audit
+layers =
+    api | infrastructure
+    application
+    domain

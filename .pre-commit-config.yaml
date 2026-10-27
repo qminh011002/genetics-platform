@@ -18,4 +18,4 @@ repos:
         language: system
         pass_filenames: false
         files: ^services/backend/.*\.py$
-        entry: bash -c 'if [ -f services/backend/.importlinter ]; then uv run --project services/backend lint-imports; fi'
+        entry: bash -c 'if [ -f services/backend/.importlinter ]; then (cd services/backend && uv run lint-imports); fi'

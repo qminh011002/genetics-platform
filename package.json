@@ -20,8 +20,8 @@
     "test:e2e": "turbo run test:e2e",
     "test:visual": "turbo run test:visual",
     "contract:check": "pnpm --filter @genetics/backend export-openapi && pnpm generate && git diff --exit-code -- contracts packages/api-client/src/generated",
-    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,cjs,json,yaml,yml,css}\" \"!.claude/**\" \"!.codex/**\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,json,yaml,yml,css}\" \"!.claude/**\" \"!.codex/**\"",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,cjs,json,yaml,yml,css}\" \"!.claude/**\" \"!.codex/**\" \"!**/.import_linter_cache/**\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,json,yaml,yml,css}\" \"!.claude/**\" \"!.codex/**\" \"!**/.import_linter_cache/**\"",
     "check:catalog": "node scripts/check-catalog.mjs",
     "ci": "pnpm format:check && pnpm check:catalog && pnpm lint && pnpm typecheck && pnpm test && pnpm contract:check && pnpm build"
   },
