@@ -1,3 +1,208 @@
 */genetics-platform-wireframes
 .claude/worktrees/
 .codex/worktrees/
+
+# ==========================================
+# GENETICS PLATFORM - MONOREPO
+# ==========================================
+
+# ------------------------------------------
+# 1. Environment variables & secrets
+# ------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.template
+
+*.pem
+*.key
+*.p12
+*.pfx
+*.secret
+secrets/
+.secrets/
+
+# Turborepo cache
+.turbo/
+**/.turbo/
+
+# Node.js dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+coverage/
+
+# ------------------------------------------
+# 2. Node.js / React / TypeScript
+# ------------------------------------------
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+dist/
+build/
+.next/
+.nuxt/
+.output/
+.vite/
+.turbo/
+.parcel-cache/
+*.tsbuildinfo
+
+# ------------------------------------------
+# 3. Python / FastAPI
+# ------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv/
+venv/
+env/
+ENV/
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyright/
+.pyre/
+.hypothesis/
+.tox/
+.nox/
+
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+
+# ------------------------------------------
+# 4. Tests & coverage
+# ------------------------------------------
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+blob-report/
+*.lcov
+
+# ------------------------------------------
+# 5. Local databases & runtime state
+# ------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.sqlite3-journal
+
+*.pid
+*.pid.lock
+*.sock
+
+tmp/
+temp/
+.cache/
+*.log
+logs/
+
+# ------------------------------------------
+# 6. Generated data & model artifacts
+# ------------------------------------------
+# Local datasets and generated outputs
+data/raw/
+data/interim/
+data/processed/
+outputs/
+artifacts/
+checkpoints/
+
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+
+# ------------------------------------------
+# 7. Claude Code / Codex
+# ------------------------------------------
+.claude/worktrees/
+.codex/worktrees/
+
+# Keep project-level AI instructions
+!.claude/CLAUDE.md
+!.claude/skills/
+!.codex/
+
+# ------------------------------------------
+# 8. Wireframes
+# ------------------------------------------
+genetics-platform-wireframes/
+**/genetics-platform-wireframes/
+
+# ------------------------------------------
+# 9. IDE & editors
+# ------------------------------------------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+*.swp
+*.swo
+*~
+*.sublime-workspace
+
+# ------------------------------------------
+# 10. Operating systems
+# ------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ------------------------------------------
+# 11. Local infrastructure & deployment
+# ------------------------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+terraform.tfvars
+*.auto.tfvars
+
+docker-compose.override.yml
+compose.override.yml
+
+# ------------------------------------------
+# 12. Backups & temporary files
+# ------------------------------------------
+*.bak
+*.backup
+*.tmp
+*.temp
+*.orig
+*.rej
