@@ -51,7 +51,7 @@ Không làm:
 - (đã chốt) Base UI không có style `new-york` (chỉ `base-nova` / `base-vega` / …) → dùng `base-vega` (bản "classic", tương đương new-york).
 
 ## Kết quả (điền khi xong)
-- PR: #
+- PR: #6 (https://github.com/qminh011002/genetics-platform/pull/6)
 - Ghi chú:
   - `shadcn init --monorepo` chỉ dựng monorepo **mới** (không áp lên repo có sẵn): đã chạy thử ngoài repo, chép khung `packages/ui` (`components.json`, alias) về đây rồi chạy **`shadcn add` thật** cho 26 file trong `src/components/` (25 primitive + `input-group` kéo theo).
   - `exports` có điều kiện `"source"` (trỏ `src/`) đứng đầu: shadcn CLI resolve alias qua `exports` nên ghi đúng vào `src/components/`; Vite / tsc không nhận `source` nên dùng `dist/` (build `tsc -p tsconfig.build.json`). App import `@genetics/ui/components/<x>`, `@genetics/ui/business`, `@genetics/ui/lib/cn`, CSS `@genetics/ui/globals.css`.
