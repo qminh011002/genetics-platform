@@ -1,0 +1,21 @@
+# Nginx edge — HTTP (local / dev). Image nginx chạy envsubst trên *.template → /etc/nginx/conf.d/default.conf.
+# Biến env thay thế: ${SERVER_NAME}, ${NGINX_HTTP_PORT}, ${NGINX_MAX_BODY}, ${CSP_CONNECT_SRC_EXTRA}.
+# Biến nginx ($host, $uri, ...) không có ngoặc nhọn nên envsubst bỏ qua.
+# Prod (TLS, HSTS) dùng nginx/prod/default.conf.template, cùng snippets/app-locations.conf.
+
+server {
+    listen ${NGINX_HTTP_PORT};
+    listen [::]:${NGINX_HTTP_PORT};
+    server_name ${SERVER_NAME};
+
+    server_tokens off;
+    client_max_body_size ${NGINX_MAX_BODY};
+
+    # HTTP local: không HSTS (giá trị rỗng → nginx bỏ header).
+    set $hsts "";
+    # CSP (infrastructure.md §9, mobile.md §8): MSAL redirect + iframe silent renew tới login.microsoftonline.com;
+    # wasm-unsafe-eval cho barcode-detector; blob: cho worker / ảnh chụp; CSP_CONNECT_SRC_EXTRA ví dụ Sentry ingest.
+    set $csp "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://login.microsoftonline.com ${CSP_CONNECT_SRC_EXTRA}; worker-src 'self' blob:; manifest-src 'self'; frame-src https://login.microsoftonline.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://login.microsoftonline.com; object-src 'none'";
+
+    include snippets/app-locations.conf;
+}
