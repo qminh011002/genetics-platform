@@ -2,7 +2,7 @@
 id: T0207
 title: Mobile auth: adapter MSAL (localStorage, redirect, bridge), MLogin, màn "dùng web" cho Manager/Admin, giữ outbox khi phải đăng nhập lại
 epic: E02
-status: todo
+status: deferred
 area: mobile
 type: feature
 priority: P0
@@ -43,6 +43,7 @@ Không làm:
 - Vitest; thủ công thiết bị
 
 ## Câu hỏi
+- 2026-10-28: chủ dự án hoãn mobile; W1 tập trung web + backend. Mở lại → đổi `status: todo` và cập nhật board.
 - (trống)
 
 ## Kết quả (điền khi xong)

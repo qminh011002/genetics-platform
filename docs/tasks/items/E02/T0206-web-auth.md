@@ -38,7 +38,7 @@ Không làm:
 ## Tiêu chí chấp nhận
 1. Cho `VITE_AUTH_MODE=dev` · Khi chọn "Worker" · Thì chuyển `/worker` (WorkerDesktop); chọn "Executive" → `/home`
 2. Cho MSW mock `/me` 403 `account_pending` · Thì màn NoAccess
-3. Cho staging với Entra thật · Khi đăng nhập · Thì `GET /me` 200 và reload trang không phải đăng nhập lại (sessionStorage)
+3. (hoãn tới T0205) Cho staging với Entra thật · Khi đăng nhập · Thì `GET /me` 200 và reload trang không phải đăng nhập lại (sessionStorage)
 4. Khi token hết hạn (mock 401 `token_expired`) · Thì refresh một lần rồi request thành công
 
 ## Ghi chú kỹ thuật

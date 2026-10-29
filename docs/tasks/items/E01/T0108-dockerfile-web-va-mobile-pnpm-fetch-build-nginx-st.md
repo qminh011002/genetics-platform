@@ -1,37 +1,34 @@
 ---
 id: T0108
-title: Dockerfile web và mobile (pnpm fetch + build + nginx static)
+title: Dockerfile web (pnpm fetch + build + nginx static)
 epic: E01
 status: todo
 area: web
 type: chore
 priority: P0
 size: S
-depends_on: [T0401, T0404]
+depends_on: [T0401]
 decisions: [ADR-0012]
 wireframes: []
 owner: claude-web
 allowed_paths:
   - "apps/web/Dockerfile"
   - "apps/web/.dockerignore"
-  - "apps/mobile/Dockerfile"
-  - "apps/mobile/.dockerignore"
 ---
 
 ## Bối cảnh
-Hai image static giống nhau; mobile cần `sw.js` ở gốc `/app`. Nguồn: `infrastructure.md` §4, pnpm Docker guide.
+Image static cho web. (Phần mobile hoãn cùng mobile — làm lại theo cùng mẫu khi mở T0404.) Nguồn: `infrastructure.md` §4, pnpm Docker guide.
 
 ## Phạm vi
 Làm:
-- `apps/web/Dockerfile`, `apps/mobile/Dockerfile`: stage build `node:22` + pnpm (`pnpm fetch` → `install --frozen-lockfile --filter <app>...` → `turbo run build --filter <app>`), stage `nginx:1.27-alpine` copy `dist/`, config SPA fallback; `.dockerignore`
-- Mobile: nginx `location /app` với `try_files … /app/index.html`, header `Service-Worker-Allowed: /app/`
+- `apps/web/Dockerfile`: stage build `node:22` + pnpm (`pnpm fetch` → `install --frozen-lockfile --filter <app>...` → `turbo run build --filter <app>`), stage `nginx:1.27-alpine` copy `dist/`, config SPA fallback; `.dockerignore`
 
 Không làm:
-- Không build mobile và web trong một image
+- Không làm Dockerfile mobile (hoãn; khi làm: nginx `location /app` với `try_files … /app/index.html`, header `Service-Worker-Allowed: /app/`, không chung image với web)
 
 ## Tiêu chí chấp nhận
-1. Khi build hai image từ gốc repo · Thì thành công; `curl localhost/` trả `index.html`; `curl localhost/app/sw.js` trả JS
-2. Khi mở `/app/batches/x` trực tiếp · Thì nhận `index.html` của mobile (fallback)
+1. Khi build image web từ gốc repo · Thì thành công; `curl localhost/` trả `index.html`
+2. Khi mở `/strains` trực tiếp · Thì nhận `index.html` (SPA fallback)
 
 ## Ghi chú kỹ thuật
 - Build arg `VITE_API_URL`, `VITE_*` client id truyền lúc build (không secret)

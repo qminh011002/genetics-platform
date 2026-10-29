@@ -7,7 +7,7 @@ area: docs
 type: chore
 priority: P0
 size: S
-depends_on: [T0502, T0503, T0504, T0505, T0106, T0107, T0108, T0109, T0110, T0204, T0206, T0207, T0403, T0406]
+depends_on: [T0502, T0503, T0504, T0106, T0107, T0108, T0109, T0204, T0206, T0403]
 decisions: []
 wireframes: []
 owner: planner
@@ -21,10 +21,10 @@ Kết thúc PLAN-003 / mốc M1 phần init. Nguồn: `docs/tasks/initialization
 
 ## Phạm vi
 Làm:
-- Chạy từng mục checklist, ghi ✓/✗ + ngày vào file
-- Thêm mục "Mẫu tham chiếu" vào `AGENTS.md` trỏ tới PR T0502 / T0504 / T0505
+- Chạy từng mục checklist, ghi ✓/✗ + ngày vào file; mục mobile (E, H-mobile) ghi "hoãn", không chặn nghiệm thu
+- Thêm mục "Mẫu tham chiếu" vào `AGENTS.md` trỏ tới PR T0502 / T0504 (T0505 bổ sung khi mobile mở lại)
 - Cập nhật trạng thái ADR còn Proposed đã được thực tế xác nhận (0001, 0002, 0006, 0007, 0008, 0011, 0013, 0014) nếu chủ dự án đồng ý; `open-questions.md` (OQ-10, OQ-14)
-- `board.md` cập nhật; viết ghi chú mở đầu W2 (`docs/tasks/epics/E06.md` khung)
+- `W1-status.md` cập nhật; viết ghi chú mở đầu W2 (khung `docs/tasks/W2-status.md`)
 
 Không làm:
 - Không làm feature W2

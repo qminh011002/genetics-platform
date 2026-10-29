@@ -43,10 +43,12 @@ Chi tiết: `docs/getting-started.md`. Deploy: `docs/ops/deploy-vm.md` (chủ d�
 - Cấm: commit secret hoặc `.env`; dữ liệu production ở local; sửa migration đã merge; `git push --force`; refactor ngoài phạm vi.
 
 ## Commit, nhánh, PR
-- Nhánh `<area>/<task-id>-<mo-ta>`; worktree riêng mỗi task (`claude --worktree T0502` hoặc Codex worktree).
+- Chỉ hai nhánh dev, không tạo nhánh / worktree riêng mỗi task; mỗi task là một hoặc vài commit có id task:
+  - Claude (web, docs, `packages/`): `web/dev` ở thư mục repo chính.
+  - Codex (backend): `backend/dev` ở worktree `../gp-backend` (`git worktree add ../gp-backend backend/dev`). Xong stub hoặc hiện thực endpoint → merge `backend/dev` vào `web/dev`; Claude chạy `pnpm generate` sau merge. Trước khi làm tiếp, Codex merge `web/dev` vào `backend/dev`.
 - Conventional Commits có id task: `feat(reference): list strains (T0502)`.
 - PR theo `.github/pull_request_template.md`; squash merge; CI xanh + 1 review người.
-- Cuối phiên: cập nhật task file (Kết quả / Còn lại / Lệnh tiếp) và `docs/tasks/board.md`.
+- Cuối phiên: cập nhật task file (Kết quả / Còn lại / Lệnh tiếp) và `docs/tasks/W1-status.md`.
 
 ## Mẫu tham chiếu
 Sau khi T0502 / T0504 / T0505 merge, các PR đó là mẫu cho endpoint, màn web, màn mobile mới (xem `docs/tasks/initialization/blueprint.md` §6).

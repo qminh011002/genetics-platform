@@ -2,7 +2,7 @@
 id: T0405
 title: Mobile offline khung: IndexedDB (idb) stores + migration, outbox, sync engine (FIFO theo batch, backoff, phân loại lỗi, idempotent), MSync, OfflineBanner/SyncBadge nối dữ liệu
 epic: E04
-status: todo
+status: deferred
 area: mobile
 type: feature
 priority: P0
@@ -46,6 +46,7 @@ Không làm:
 - Vitest unit (sync engine) + component (MSync)
 
 ## Câu hỏi
+- 2026-10-28: chủ dự án hoãn mobile; W1 tập trung web + backend. Mở lại → đổi `status: todo` và cập nhật board.
 - (trống)
 
 ## Kết quả (điền khi xong)

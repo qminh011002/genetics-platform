@@ -2,7 +2,7 @@
 id: T0505
 title: Mobile reference store: nạp strains/containers/form-defs vào IndexedDB khi online, màn chọn dòng giống (MListRow) mở được offline, dùng trong Home mock
 epic: E05
-status: todo
+status: deferred
 area: mobile
 type: feature
 priority: P0
@@ -41,6 +41,7 @@ Không làm:
 - Vitest + Playwright
 
 ## Câu hỏi
+- 2026-10-28: chủ dự án hoãn mobile; W1 tập trung web + backend. Mở lại → đổi `status: todo` và cập nhật board.
 - (trống)
 
 ## Kết quả (điền khi xong)

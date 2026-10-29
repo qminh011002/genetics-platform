@@ -31,4 +31,4 @@ Downgrade được? · Thời gian ước tính trên staging:
 - [ ] Không component / abstraction mới ngoài danh sách tài liệu
 - [ ] Không sửa file sinh tay; `contracts/` + `generated/` sinh lại nếu API đổi
 - [ ] Tài liệu / ADR cập nhật nếu hành vi khác tài liệu
-- [ ] Task file: trạng thái, Kết quả; `docs/tasks/board.md` cập nhật
+- [ ] Task file: trạng thái, Kết quả; `docs/tasks/W1-status.md` cập nhật

@@ -23,14 +23,11 @@ docs/
 ├─ design/design-system.md
 ├─ decisions/                      # ADR-0001 … ADR-0016 (xem decisions/README.md)
 ├─ migration/                      # PLAN-001
-├─ tasks/initialization/           # PLAN-002 blueprint, setup-guide, dependency-map, acceptance-checklist
+├─ tasks/initialization/           # PLAN-002 blueprint, setup-guide, acceptance-checklist
 ├─ data/                           # data dictionary, định nghĩa KPI đã ký, bảng đối chiếu migrate
 └─ tasks/
    ├─ workflow.md                  # file này
-   ├─ board.md                     # bảng tổng: mọi task, trạng thái, người làm (cập nhật mỗi PR)
-   ├─ epics/
-   │  ├─ E01-foundation.md         # mục tiêu, phạm vi, tiêu chí xong của epic, danh sách task
-   │  └─ …
+   ├─ W1-status.md                 # bảng trạng thái wave hiện tại: mọi task, trạng thái, agent (cập nhật mỗi PR)
    └─ items/
       ├─ E01/T0101-monorepo-skeleton.md
       └─ …
@@ -92,12 +89,13 @@ todo → ready → in_progress → in_review → done
 |---|---|
 | `todo` | Đã ghi, chưa đủ điều kiện bắt đầu |
 | `ready` | Đạt Definition of Ready (§5) |
-| `in_progress` | Có người / agent nhận, có nhánh |
+| `in_progress` | Có người / agent nhận, đang làm trên `web/dev` hoặc `backend/dev` |
 | `blocked` | Chờ quyết định, chờ task khác, chờ thông tin; ghi rõ chờ gì |
 | `in_review` | Có PR, CI xanh, chờ review |
 | `done` | Merge, đạt Definition of Done (§6) |
+| `deferred` | Chủ dự án hoãn có chủ đích (không phải chờ thông tin); không dispatch, không tính vào đường găng; mở lại thì về `todo` |
 
-`board.md` và frontmatter của task phải cùng trạng thái.
+`W1-status.md` và frontmatter của task phải cùng trạng thái.
 
 ### 4.4 Mẫu task
 
@@ -181,11 +179,11 @@ Task được chuyển `ready` khi:
 - [ ] Mobile: chạy được offline nếu là màn nhập; thử trên giả lập điện thoại (Playwright) cho đường đi chính.
 - [ ] Không có secret, dữ liệu thật hay token trong code, log, fixture.
 - [ ] Tài liệu được cập nhật nếu hành vi khác tài liệu.
-- [ ] Task file: trạng thái `done`, mục "Kết quả" điền PR; `board.md` cập nhật.
+- [ ] Task file: trạng thái `done`, mục "Kết quả" điền PR; `W1-status.md` cập nhật.
 
 ## 7. Nhánh, commit, PR
 
-- Nhánh từ `main`: `<area>/<task-id>-<mo-ta-ngan>`, ví dụ `backend/T0607-close-egg-stage`.
+- Chỉ hai nhánh dev, không tạo nhánh riêng mỗi task: Claude (web, docs, `packages/`) trên `web/dev`; Codex (backend) trên `backend/dev` ở worktree `../gp-backend`. Xong stub / hiện thực endpoint → merge `backend/dev` vào `web/dev` rồi `pnpm generate`; Codex merge `web/dev` vào `backend/dev` trước khi làm tiếp. Hai agent chạy song song không dùng chung một thư mục.
 - Commit theo Conventional Commits, có id task:
 
 ```
@@ -212,7 +210,7 @@ chore(infra): add staging compose profile (T0105)
 4. **Test trước khi báo xong**: chạy toàn bộ kiểm tra của CI ở local; dán kết quả tóm tắt vào PR.
 5. **Không bao giờ**: commit secret, dùng dữ liệu production ở local, tắt test để CI xanh, sửa migration đã merge, đổi tên trường API đã phát hành mà không có kế hoạch version.
 6. **Thay đổi nhỏ, thường xuyên**: PR dưới khoảng 600 dòng thay đổi (không tính file sinh ra) dễ review hơn.
-7. **Cập nhật trạng thái**: task file và `board.md` phản ánh đúng thực tế sau mỗi bước (`in_progress`, `blocked`, `in_review`).
+7. **Cập nhật trạng thái**: task file và `W1-status.md` phản ánh đúng thực tế sau mỗi bước (`in_progress`, `blocked`, `in_review`).
 8. Khi tạo task mới (lập kế hoạch): mỗi task theo mẫu §4.4, đạt Definition of Ready, gắn epic, gắn `depends_on`, gắn board wireframe nếu có UI.
 
 ## 10. Quyết định (ADR)
@@ -259,12 +257,12 @@ Task bị chặn bởi quyết định chưa chốt vẫn được làm nếu d�
 ## 12. Nhịp làm việc
 
 - Kế hoạch theo **vòng 2 tuần**: đầu vòng chọn task `ready` theo thứ tự epic và ưu tiên; cuối vòng demo trên staging cho user (Executive phụ trách, Manager).
-- Mỗi ngày cập nhật `board.md`; task `blocked` quá 1 ngày được đưa lên thảo luận.
+- Mỗi ngày cập nhật `W1-status.md`; task `blocked` quá 1 ngày được đưa lên thảo luận.
 - Lỗi user báo từ staging / production ghi thành task `type: bug`, có bước tái hiện, kết quả mong đợi, ảnh chụp, `trace_id` nếu có. Phân loại khác biệt khi migrate theo 5 nhóm: Match / Logic Difference / Source Gap / User Error / Defect.
 
 ## 13. Khi lập danh sách task (hướng dẫn cho người lập kế hoạch)
 
-1. Đi theo thứ tự epic §3. Với mỗi epic, viết file `epics/Exx-*.md`: mục tiêu, phạm vi, tiêu chí xong (lấy từ cột "Xong khi" trong `overview.md` §12), danh sách task.
+1. Đi theo thứ tự epic §3. Mục tiêu và tiêu chí xong của epic lấy từ cột "Xong khi" trong `overview.md` §12; danh sách task của wave ghi vào `docs/tasks/Wn-status.md`.
 2. Lấy đầu vào từ:
    - Bảng route `web.md` §4 và bảng màn `mobile.md` §5 (mỗi màn hoặc nhóm màn nhỏ thường là 1–2 task UI).
    - Danh mục endpoint `api-standards.md` §14 (mỗi nhóm endpoint là vài task backend).

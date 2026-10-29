@@ -2,7 +2,7 @@
 id: T0205
 title: Entra ID: 3 app registration (API scope v2, web SPA, mobile SPA), admin consent, redirect URI local/staging, điền env
 epic: E02
-status: ready
+status: deferred
 area: infra
 type: chore
 priority: P0
@@ -38,6 +38,7 @@ Không làm:
 - Thủ công, ảnh chụp vào task file
 
 ## Câu hỏi
+- 2026-10-29: chủ dự án hoãn tới khi dev web + backend xong (local dùng `AUTH_MODE=dev`). Mở lại → đổi `status: ready` và cập nhật board.
 - (trống)
 
 ## Kết quả (điền khi xong)

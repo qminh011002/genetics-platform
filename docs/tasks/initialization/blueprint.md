@@ -102,7 +102,7 @@ Backend: `reference` module (domain `Strain`, use case `ListStrains`, `CreateStr
 5. Luật chung: một task một PR ≤ 2 ngày; chỉ sửa trong `allowed_paths`; không thêm dependency; không sửa file sinh; không đổi hợp đồng ngoài PR `contract`; không thiết kế lại màn; test trước khi báo xong; thiếu thông tin → `blocked` + câu hỏi (`workflow.md` §9).
 6. Quy ước commit / nhánh / PR (`workflow.md` §7).
 7. Cấm tuyệt đối: commit secret, dữ liệu production ở local, tắt test, sửa migration đã merge.
-8. Handoff: cập nhật task file + `board.md`.
+8. Handoff: cập nhật task file + `W1-status.md`.
 
 ### A.2 `CLAUDE.md` (gốc)
 

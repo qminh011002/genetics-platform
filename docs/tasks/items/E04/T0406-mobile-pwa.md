@@ -2,7 +2,7 @@
 id: T0406
 title: Mobile PWA: vite-plugin-pwa injectManifest (sw.ts routes), manifest, icons/screenshots, install (Android prompt / iOS hướng dẫn), cập nhật "Có bản mới" không reload khi đang nhập, e2e PWA offline + axe
 epic: E04
-status: todo
+status: deferred
 area: mobile
 type: feature
 priority: P0
@@ -49,6 +49,7 @@ Không làm:
 - Playwright profile Pixel 7 + iPhone 15; Vitest cho install adapter
 
 ## Câu hỏi
+- 2026-10-28: chủ dự án hoãn mobile; W1 tập trung web + backend. Mở lại → đổi `status: todo` và cập nhật board.
 - (trống)
 
 ## Kết quả (điền khi xong)

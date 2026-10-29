@@ -43,6 +43,8 @@
 
 ## E. Mobile
 
+> Hoãn từ 2026-10-28 (chủ dự án: làm web + backend trước). Không chặn nghiệm thu init; chạy khi mobile mở lại.
+
 - [ ] `vite-plugin-pwa` cấu hình `injectManifest`, `registerType: prompt`; `src/sw/sw.ts` có route theo `mobile.md` §7.2.
 - [ ] `manifest.json` hợp lệ (name, short_name ≤ 12, icons 192 / 512 / maskable, display standalone, start_url, scope, theme_color); `index.html` có meta Apple + `viewport-fit=cover`.
 - [ ] Service worker: precache shell + mọi chunk JS (`dist/assets/**`); `/auth-redirect.html` NetworkOnly; API NetworkOnly; "Có bản mới" không tự reload khi đang nhập.
@@ -65,15 +67,15 @@
 - [ ] Hook scope-guard: Edit ngoài `TASK_SCOPE` bị chặn (exit 2) — kiểm thủ công có log.
 - [ ] `.claude/settings.json` deny lệnh nguy hiểm (`rm -rf`, `git push --force`, `curl` ngoài allowlist).
 - [ ] `.codex/setup.sh` chạy được trong worktree Codex; `codex exec --sandbox workspace-write` hoàn thành lệnh mẫu.
-- [ ] CODEOWNERS, PR template, Dependabot (pnpm, uv, docker, actions; group minor/patch), ruleset `main` với required checks luôn báo trạng thái (PR chỉ sửa `docs/` vẫn có check xanh).
-- [ ] `docs/tasks/board.md` và `docs/tasks/epics/E01…E05.md` tồn tại (PLAN-003 tạo nội dung).
+- [ ] CODEOWNERS, PR template, Dependabot (pnpm, uv, docker, actions; group minor/patch), (ruleset `main` hoãn cùng T0110) ruleset `main` với required checks luôn báo trạng thái (PR chỉ sửa `docs/` vẫn có check xanh).
+- [ ] `docs/tasks/W1-status.md` tồn tại và khớp frontmatter task file.
 
 ## H. Lát dọc mẫu Strains
 
 - [ ] Backend: domain `Strain`, use case, router, migration; test unit + API + RLS (không áp) + schemathesis.
 - [ ] OpenAPI có `reference_list_strains`, `reference_create_strain`; SDK có `useReferenceListStrains`.
 - [ ] Web `/strains` dùng `DataTable`, `Can('strain.create')`, i18n, trạng thái đủ; Vitest + e2e + visual.
-- [ ] Mobile: `reference` store có strains; màn mẫu hiển thị offline sau khi đã online một lần.
+- [ ] (hoãn) Mobile: `reference` store có strains; màn mẫu hiển thị offline sau khi đã online một lần.
 - [ ] PR của lát dọc đi qua đủ gate và review; được ghi là "mẫu tham chiếu" trong `AGENTS.md`.
 
 ## I. Tài liệu
