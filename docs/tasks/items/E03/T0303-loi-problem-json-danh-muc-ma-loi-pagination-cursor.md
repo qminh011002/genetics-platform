@@ -50,7 +50,7 @@ Không làm:
 - Đã giải quyết (2026-10-31): người dùng trả lời `yes`, cho phép bổ sung `services/backend/src/genetics/bootstrap/app.py` vào `allowed_paths` để đăng ký handler/middleware từ shared_kernel.
 
 ## Kết quả
-- PR: đang mở từ `backend/dev` vào `web/dev` (sẽ cập nhật URL).
+- PR: [#15](https://github.com/qminh011002/genetics-platform/pull/15), `backend/dev` → `web/dev`, nhãn `contract`. Commit hiện thực: `52f5065`.
 - `domain/errors.py`: 29 mã HTTP + subclass, 12 blocker, 7 field code; domain chỉ dùng stdlib.
 - `api/problem.py`, `api/titles.py`: handler DomainError / RequestValidationError / HTTPException / Exception, Problem schema + helper responses cho mọi HTTP 4xx chuẩn; title vi/en dùng nội dung shared i18n, hỗ trợ quality của Accept-Language. Lỗi 5xx không trả detail hoặc extension đầu vào.
 - Middleware ASGI bind/reset structlog trace_id, sinh UUIDv7 trên Python 3.13 hoặc trả lại X-Request-ID đầu vào; mọi response có Cache-Control: no-store, kể cả 500.
@@ -81,7 +81,7 @@ Không làm:
 ## Lệnh để tiếp tục
 ```sh
 cd /home/qminh/company_project/gp-backend
-gh pr checks --watch
+gh pr checks 15 --watch
 # Sau khi PR được review/merge vào web/dev, trước task backend kế tiếp:
 git merge web/dev
 ```
