@@ -11,7 +11,7 @@ Task: T____ (link task file) · Epic: E__
 
 ## Cách kiểm (dán lệnh + kết quả)
 ```
-pnpm ci
+pnpm run ci
 ```
 
 ## UI (nếu có)

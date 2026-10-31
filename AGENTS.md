@@ -21,7 +21,7 @@ Thay bộ app AppSheet của R&D Genetics (Entobel, nuôi ruồi lính đen) b�
 pnpm install --frozen-lockfile && uv sync --locked   # cài
 pnpm build:tokens && pnpm generate                   # token, OpenAPI → SDK
 pnpm dev | pnpm build | pnpm lint | pnpm typecheck | pnpm test | pnpm test:e2e | pnpm contract:check
-pnpm ci                                              # mọi gate như CI — chạy trước khi mở PR
+pnpm run ci                                          # mọi gate như CI — chạy trước khi mở PR
 docker compose -f infra/compose.yaml --profile dev up -d postgres
 ```
 Chi tiết: `docs/getting-started.md`. Deploy: `docs/ops/deploy-vm.md` (chủ dự án làm).
@@ -39,7 +39,7 @@ Chi tiết: `docs/getting-started.md`. Deploy: `docs/ops/deploy-vm.md` (chủ d�
 - Frontend không gọi `fetch` tay, không bịa endpoint: chỉ dùng hook từ `@genetics/api-client`; endpoint chưa có → blocked.
 - Không thiết kế lại màn: UI theo đúng board wireframe; không tạo component ngoài danh sách `design-system.md` §6 (thêm = sửa tài liệu cùng PR); không hex / px tuỳ ý.
 - Luật nghiệp vụ (gate, công thức, quyền, mã) chỉ lấy từ tài liệu / ADR; không tự chốt.
-- Test trước khi báo xong: `pnpm ci` xanh; dán kết quả vào PR. Không tắt test, không `# noqa` / `eslint-disable` không lý do.
+- Test trước khi báo xong: `pnpm run ci` xanh; dán kết quả vào PR. Không tắt test, không `# noqa` / `eslint-disable` không lý do.
 - Cấm: commit secret hoặc `.env`; dữ liệu production ở local; sửa migration đã merge; `git push --force`; refactor ngoài phạm vi.
 
 ## Commit, nhánh, PR

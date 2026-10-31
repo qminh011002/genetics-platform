@@ -1,4 +1,4 @@
-# Người duyệt (thay handle thật ở T0109). Agent làm, người duyệt.
+# Người duyệt. Agent làm, người duyệt. Mỗi dòng một pattern (GitHub không nhận nhiều pattern trên một dòng).
 *                               @qminh011002
 /services/backend/              @qminh011002
 /apps/web/                      @qminh011002
@@ -8,4 +8,7 @@
 /docs/                          @qminh011002
 /infra/                         @qminh011002
 /.github/                       @qminh011002
-/AGENTS.md /CLAUDE.md /.claude/ /.codex/   @qminh011002
+/AGENTS.md                      @qminh011002
+/CLAUDE.md                      @qminh011002
+/.claude/                       @qminh011002
+/.codex/                        @qminh011002
