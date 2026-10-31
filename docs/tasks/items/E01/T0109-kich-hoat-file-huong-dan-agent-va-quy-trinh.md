@@ -52,7 +52,7 @@ Không làm:
 - (trống)
 
 ## Kết quả (điền khi xong)
-- PR: #
+- PR: [#14](https://github.com/qminh011002/genetics-platform/pull/14)
 - Ghi chú (2026-10-31, Claude Code 2.1.316, codex-cli 0.166.0, pnpm 12.15.0):
   - `CODEOWNERS`: handle `@qminh011002` (collaborator duy nhất của repo). Sửa dòng cuối gộp 4 pattern trên một dòng — GitHub báo `Invalid owner on line 11` (`gh api repos/qminh011002/genetics-platform/codeowners/errors`); tách mỗi pattern một dòng.
   - `pnpm ci` ở pnpm 12 là lệnh clean install có sẵn (xoá `node_modules` rồi cài lại), **không** chạy script `ci`. Đổi thành `pnpm run ci` trong skill `/run-ci-locally`, `AGENTS.md`, `CLAUDE.md`, PR template. Không đổi nội dung luật.
@@ -84,7 +84,7 @@ $ codex exec --sandbox workspace-write "Run exactly … pnpm -v && uv --version"
   sandbox: workspace-write [workdir, /tmp, $TMPDIR]
   /usr/bin/zsh -lc 'pnpm -v && uv --version' succeeded: 12.15.0 · uv 0.13.5
 ```
-Tiêu chí 3 — PR template: PR của task này mở bằng template, đủ mục (Task, Phạm vi, Thay đổi, Cách kiểm, UI, Migration, API, Dependency, Rủi ro, Checklist). CODEOWNERS: `codeowners/errors?ref=web/dev` → xem mục dưới.
+Tiêu chí 3 — PR template: PR của task này mở bằng template, đủ mục (Task, Phạm vi, Thay đổi, Cách kiểm, UI, Migration, API, Dependency, Rủi ro, Checklist). CODEOWNERS: `gh api "repos/qminh011002/genetics-platform/codeowners/errors?ref=web/dev"` → `{"errors":[]}`.
 
 `pnpm run ci` (repo chính, `web/dev`):
 ```

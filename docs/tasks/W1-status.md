@@ -38,7 +38,7 @@ Phát việc: dán `docs/tasks/prompts/start-task.md` (thay `TASK_ID`) cho đún
 | T0106 | [Infra](items/E01/T0106-infra.md) | Claude | P0 | L | T0101 | done | đã merge `main` |
 | T0107 | [Dockerfile backend](items/E01/T0107-dockerfile-backend-api-worker-cung-image-uv-multi-.md) | Codex | P0 | S | T0301 | ready | |
 | T0108 | [Dockerfile web](items/E01/T0108-dockerfile-web-va-mobile-pnpm-fetch-build-nginx-st.md) | Claude | P0 | S | T0401 | todo | |
-| T0109 | [Kích hoạt file hướng dẫn agent và quy trình](items/E01/T0109-kich-hoat-file-huong-dan-agent-va-quy-trinh.md) | Claude | P0 | S | T0101 | in_review | |
+| T0109 | [Kích hoạt file hướng dẫn agent và quy trình](items/E01/T0109-kich-hoat-file-huong-dan-agent-va-quy-trinh.md) | Claude | P0 | S | T0101 | in_review | [#14](https://github.com/qminh011002/genetics-platform/pull/14) |
 | T0110 | [Thiết lập GitHub](items/E01/T0110-thiet-lap-github.md) | Chủ dự án | P0 | S | T0105 | deferred | |
 | T0201 | [Schema auth](items/E02/T0201-schema-auth.md) | Codex | P0 | L | T0302 | ready | |
 | T0202 | [Xác thực](items/E02/T0202-xac-thuc.md) | Codex | P0 | M | T0201, T0303 | todo | |
