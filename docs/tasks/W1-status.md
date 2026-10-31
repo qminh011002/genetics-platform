@@ -49,7 +49,7 @@ Phát việc: dán `docs/tasks/prompts/start-task.md` (thay `TASK_ID`) cho đún
 | T0207 | [Mobile auth](items/E02/T0207-mobile-auth.md) | Claude | P0 | M | T0404, T0202 | deferred | |
 | T0301 | [Backend skeleton](items/E03/T0301-backend-skeleton.md) | Codex | P0 | L | T0101 | done | đã merge `main` |
 | T0302 | [Migrations nền](items/E03/T0302-migrations-nen.md) | Codex | P0 | M | T0301 | done | [#5](https://github.com/qminh011002/genetics-platform/pull/5) |
-| T0303 | [problem+json, mã lỗi, pagination, If-Match](items/E03/T0303-loi-problem-json-danh-muc-ma-loi-pagination-cursor.md) | Codex | P0 | M | T0301, T0104 | ready | |
+| T0303 | [problem+json, mã lỗi, pagination, If-Match](items/E03/T0303-loi-problem-json-danh-muc-ma-loi-pagination-cursor.md) | Codex | P0 | M | T0301, T0104 | in_review | [#15](https://github.com/qminh011002/genetics-platform/pull/15) · CI local xanh (93 backend tests) |
 | T0304 | [Session / UnitOfWork, Procrastinate worker](items/E03/T0304-session-unitofwork-voi-set-config-app-procrastinat.md) | Codex | P0 | L | T0302 | ready | |
 | T0305 | [Hợp đồng OpenAPI](items/E03/T0305-hop-ong.md) | Codex | P0 | M | T0303 | todo | |
 | T0306 | [Package api-client](items/E03/T0306-package-api-client.md) | Claude | P0 | M | T0305, T0104 | todo | |
