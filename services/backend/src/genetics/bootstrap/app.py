@@ -1,6 +1,6 @@
 """`create_app()`: lifespan (engine), router `/api/v1`, `/healthz`, `/readyz`.
 
-Chưa có: problem+json handler (ADR-0007, T0303), auth (E02), job nền (T0304), structlog middleware.
+Chưa có: auth (E02), job nền (T0304).
 `generate_unique_id_function=lambda r: r.name` → `operationId` = tên hàm router
 (`<tag>_<verb>_<noun>`, duy nhất; api-standards.md §17).
 """
@@ -16,13 +16,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from genetics.bootstrap.container import Container
 from genetics.bootstrap.health import router as health_router
 from genetics.bootstrap.settings import Settings, load_settings
+from genetics.shared_kernel.api.problem import install_problem_handlers, responses
 
 API_PREFIX = "/api/v1"
 
 
 def build_api_router() -> APIRouter:
     """Router gốc `/api/v1`; mỗi module `include_router` router của nó ở đây khi có endpoint."""
-    return APIRouter(prefix=API_PREFIX)
+    return APIRouter(prefix=API_PREFIX, responses=responses())
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -55,6 +56,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         allow_headers=["*"],
         expose_headers=["ETag", "Location", "Retry-After", "X-Request-ID"],
     )
+    install_problem_handlers(app)
     app.include_router(health_router)
     app.include_router(build_api_router())
     return app
