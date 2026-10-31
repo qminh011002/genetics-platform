@@ -2,7 +2,7 @@
 
 > Một chỗ duy nhất để xem trạng thái và phát việc cho agent. Cập nhật mỗi PR; trạng thái ở đây và frontmatter task file phải khớp.
 > Trạng thái: `todo` → `ready` → `in_progress` → `in_review` → `done` · `blocked` (chờ thông tin) · `deferred` (chủ dự án hoãn).
-> Cập nhật: 2026-10-29 · Done 8 / 39 · Ready 5 · Deferred 8.
+> Cập nhật: 2026-10-31 · Done 8 / 39 · Ready 4 · Deferred 8.
 
 ## Hoãn có chủ đích
 - **2026-10-28:** mobile hoãn (T0207, T0404–T0407, T0505). T0108 chỉ còn Dockerfile web; T0506 không chờ mobile.
@@ -22,7 +22,7 @@ Phát việc: dán `docs/tasks/prompts/start-task.md` (thay `TASK_ID`) cho đún
 | Agent | Task (theo thứ tự ưu tiên) |
 |---|---|
 | Codex | **T0303** (đường găng) → T0304 · T0201 · T0107 |
-| Claude | T0109 (web chờ T0305 → T0306) |
+| Claude | (chờ T0305 → T0306) |
 
 Đường găng: T0303 → T0305 → T0306 → T0401 → T0402 → T0504 (web) · T0201 → T0202 → T0203 → T0502 (backend).
 
@@ -38,7 +38,7 @@ Phát việc: dán `docs/tasks/prompts/start-task.md` (thay `TASK_ID`) cho đún
 | T0106 | [Infra](items/E01/T0106-infra.md) | Claude | P0 | L | T0101 | done | đã merge `main` |
 | T0107 | [Dockerfile backend](items/E01/T0107-dockerfile-backend-api-worker-cung-image-uv-multi-.md) | Codex | P0 | S | T0301 | ready | |
 | T0108 | [Dockerfile web](items/E01/T0108-dockerfile-web-va-mobile-pnpm-fetch-build-nginx-st.md) | Claude | P0 | S | T0401 | todo | |
-| T0109 | [Kích hoạt file hướng dẫn agent và quy trình](items/E01/T0109-kich-hoat-file-huong-dan-agent-va-quy-trinh.md) | Claude | P0 | S | T0101 | ready | |
+| T0109 | [Kích hoạt file hướng dẫn agent và quy trình](items/E01/T0109-kich-hoat-file-huong-dan-agent-va-quy-trinh.md) | Claude | P0 | S | T0101 | in_review | |
 | T0110 | [Thiết lập GitHub](items/E01/T0110-thiet-lap-github.md) | Chủ dự án | P0 | S | T0105 | deferred | |
 | T0201 | [Schema auth](items/E02/T0201-schema-auth.md) | Codex | P0 | L | T0302 | ready | |
 | T0202 | [Xác thực](items/E02/T0202-xac-thuc.md) | Codex | P0 | M | T0201, T0303 | todo | |
