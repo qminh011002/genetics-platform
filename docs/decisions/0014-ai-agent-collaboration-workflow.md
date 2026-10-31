@@ -13,7 +13,7 @@ Codex (backend), Claude (web), Claude (mobile), Claude Planner. Nghiên cứu 26
 5. **Hợp đồng**: đổi API chỉ qua PR nhãn `contract`; frontend không bịa endpoint (ADR-0006).
 6. **Dependency**: thêm gói = PR có nhãn `deps-approved` (CI kiểm diff lockfile).
 7. **Test trước khi báo xong**: PR template bắt dán lệnh + kết quả; CI là trọng tài; agent không được tắt test / bỏ qua lint.
-8. **Handoff**: cuối phiên agent ghi `docs/tasks/items/<id>.md` mục "Kết quả / Còn lại / Lệnh để tiếp tục"; `board.md` cập nhật; phiên sau đọc task file + `git log` nhánh.
+8. **Handoff**: cuối phiên agent ghi `docs/tasks/items/<id>.md` mục "Kết quả / Còn lại / Lệnh để tiếp tục"; `W1-status.md` cập nhật; phiên sau đọc task file + `git log` nhánh.
 9. **Cấm** (enforce bằng mục 2–7, phần còn lại review): mở rộng phạm vi, thêm dependency không duyệt, abstraction thừa, thiết kế lại màn đã duyệt, đổi hợp đồng âm thầm, refactor module khác, báo xong không có test.
 
 ## Hệ quả

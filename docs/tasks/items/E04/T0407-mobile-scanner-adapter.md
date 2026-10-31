@@ -2,7 +2,7 @@
 id: T0407
 title: Mobile scanner adapter: barcode-detector ponyfill + native, camera (getUserMedia, torch feature-detect, dừng khi ẩn), MScan + MScanResult khung với nhập mã tay
 epic: E04
-status: todo
+status: deferred
 area: mobile
 type: feature
 priority: P1
@@ -42,6 +42,7 @@ Không làm:
 - Vitest + Playwright
 
 ## Câu hỏi
+- 2026-10-28: chủ dự án hoãn mobile; W1 tập trung web + backend. Mở lại → đổi `status: todo` và cập nhật board.
 - (trống)
 
 ## Kết quả (điền khi xong)

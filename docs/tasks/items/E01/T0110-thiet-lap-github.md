@@ -2,7 +2,7 @@
 id: T0110
 title: Thiết lập GitHub: ruleset main (required checks, review, squash, linear), labels, GHCR, Dependabot bật
 epic: E01
-status: ready
+status: deferred
 area: infra
 type: chore
 priority: P0
@@ -38,6 +38,7 @@ Không làm:
 - Kiểm thủ công, chụp màn hình vào task file
 
 ## Câu hỏi
+- 2026-10-29: chủ dự án hoãn tới khi dev web + backend xong (local dùng `AUTH_MODE=dev`). Mở lại → đổi `status: ready` và cập nhật board.
 - (trống)
 
 ## Kết quả (điền khi xong)

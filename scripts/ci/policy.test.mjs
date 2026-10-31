@@ -102,7 +102,7 @@ describe('CLI trên repo git tạm', () => {
     const { dir, git, write } = tempRepo();
     write('services/backend/src/a.py', 'x = 1\n');
     write('apps/web/src/main.tsx', 'export {};\n');
-    write('docs/tasks/board.md', '| T0303 |\n');
+    write('docs/tasks/W1-status.md', '| T0303 |\n');
     git('commit', '-qm', 'pr');
     writeFileSync(join(dir, 'body.md'), 'Task: T0303 (link) · Epic: E03');
     const res = runCli('scope-check.mjs', dir, ['--body-file', 'body.md', '--base', 'main']);

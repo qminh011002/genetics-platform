@@ -1,6 +1,6 @@
 // scope-check (ADR-0014 §3): đọc `Task: Txxxx` trong PR body → `allowed_paths` của task file → so với diff.
 // Output `status` = in-scope | out-of-scope | no-task; workflow dựa vào đó gắn / gỡ nhãn `out-of-scope`.
-// Luôn cho phép task file của chính task và `docs/tasks/board.md` (handoff cuối phiên, AGENTS.md).
+// Luôn cho phép task file của chính task và `docs/tasks/W*-status.md` (handoff cuối phiên, AGENTS.md).
 // Glob giống `.claude/hooks/scope-guard.sh`: `**/` = 0..n thư mục, `**` = mọi thứ, `*` = trong một thư mục.
 //
 // node scripts/ci/scope-check.mjs --body-file <file> --base <ref> [--head <ref>]
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { changedFiles, parseArgs, setOutput, summary } from './lib.mjs';
 
 const ITEMS_DIR = 'docs/tasks/items';
-const ALWAYS_ALLOWED = ['docs/tasks/board.md'];
+const ALWAYS_ALLOWED = ['docs/tasks/W*-status.md'];
 
 export function parseTaskId(body) {
   const m = /^\s*Task:\s*\[?(T\d{4})\b/im.exec(body ?? '');

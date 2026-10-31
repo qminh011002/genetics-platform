@@ -114,8 +114,8 @@ Camera chỉ chạy trên HTTPS. Cách nhanh: `pnpm --filter @genetics/mobile de
 ## 8. Quy trình làm một task
 
 1. Đọc task file trong `docs/tasks/items/`, tài liệu kiến trúc nó trỏ tới, `AGENTS.md`.
-2. `git worktree add ../gp-<task-id> -b <area>/<task-id>-<mo-ta>` (hoặc `claude --worktree <task-id>`).
-3. Làm trong `allowed_paths`; `pnpm ci` xanh; cập nhật `docs/tasks/board.md`.
+2. Claude: `git switch web/dev && git pull`. Codex: `git worktree add ../gp-backend backend/dev` (lần đầu), làm trong `../gp-backend`. Không tạo nhánh riêng mỗi task.
+3. Làm trong `allowed_paths`; `pnpm ci` xanh; cập nhật `docs/tasks/W1-status.md`.
 4. PR theo template; squash merge sau khi CI xanh và có review.
 
 ## 9. Lỗi thường gặp
